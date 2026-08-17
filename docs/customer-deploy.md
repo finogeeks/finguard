@@ -66,5 +66,5 @@ runtime you do not control.
 ## What not to claim
 
 - Laptop `try.sh` PASS = production IdP or design-partner ERP
-- Unsigned `ghcr.io/geeksfino/finguard` = signed supply chain
+- Unsigned `ghcr.io/finogeeks/finguard` = signed supply chain
 - This procedure = GA go

@@ -36,8 +36,8 @@ Use images you already built or loaded:
 FINGUARD_SKIP_PULL=1 ./try.sh
 ```
 
-The script pulls `ghcr.io/geeksfino/finguard:<version>` and
-`ghcr.io/geeksfino/finguard-mock-erp:<version>`, starts the greenfield profile
+The script pulls `ghcr.io/finogeeks/finguard:<version>` and
+`ghcr.io/finogeeks/finguard-mock-erp:<version>`, starts the greenfield profile
 (FinGuard + agentgateway + Postgres + mock ERP), then sends one write through
 `:13000/writes` twice with the same `Idempotency-Key` and checks the mock ERP
 saw **one** mutation.

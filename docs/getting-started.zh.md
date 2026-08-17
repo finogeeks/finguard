@@ -34,8 +34,8 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 FINGUARD_SKIP_PULL=1 ./try.sh
 ```
 
-脚本会拉取 `ghcr.io/geeksfino/finguard:<version>` 与
-`ghcr.io/geeksfino/finguard-mock-erp:<version>`，启动绿地 profile
+脚本会拉取 `ghcr.io/finogeeks/finguard:<version>` 与
+`ghcr.io/finogeeks/finguard-mock-erp:<version>`，启动绿地 profile
 （FinGuard + agentgateway + Postgres + mock ERP），然后用同一 `Idempotency-Key`
 向 `:13000/writes` 写两次，并确认 mock ERP 只发生 **一次** 变更。
 

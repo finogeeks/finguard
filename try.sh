@@ -16,7 +16,7 @@ REPO_DEFAULT="finogeeks/finguard"
 REPO="${FINGUARD_REPO:-$REPO_DEFAULT}"
 VERSION_RAW="${FINGUARD_VERSION:-0.1.0}"
 PACK_DIR_DEFAULT="${HOME}/.finguard-try"
-IMAGE_NS="${FINGUARD_IMAGE_NS:-ghcr.io/geeksfino}"
+IMAGE_NS="${FINGUARD_IMAGE_NS:-ghcr.io/finogeeks}"
 SKIP_PULL="${FINGUARD_SKIP_PULL:-0}"
 COMPOSE_PROJECT="${FINGUARD_COMPOSE_PROJECT:-finguard-try}"
 
@@ -46,7 +46,7 @@ Environment:
   FINGUARD_VERSION          Image/pack version (default: 0.1.0)
   FINGUARD_REPO             GitHub owner/name to clone when not in a pack (default: finogeeks/finguard)
   FINGUARD_PACK_DIR         Where to clone the public pack (default: ~/.finguard-try)
-  FINGUARD_IMAGE_NS         Registry namespace (default: ghcr.io/geeksfino)
+  FINGUARD_IMAGE_NS         Registry namespace (default: ghcr.io/finogeeks)
   FINGUARD_SKIP_PULL        Set to 1 to use images already present locally
   FINGUARD_COMPOSE_PROJECT  Compose project name (default: finguard-try)
 

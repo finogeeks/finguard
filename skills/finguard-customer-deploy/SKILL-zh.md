@@ -28,7 +28,7 @@ https://github.com/finogeeks/finguard/blob/main/docs/customer-deploy.zh.md
 
 ```
 - [ ] 已选拓扑（绿地 vs 已有网关）
-- [ ] 镜像：ghcr.io/geeksfino/finguard:<version>（钉 tag 或 digest）
+- [ ] 镜像：ghcr.io/finogeeks/finguard:<version>（钉 tag 或 digest）
 - [ ] Helm 值：issuer、jwksUrl、Secret
 - [ ] 已审查 helm template；tls.enabled 与回环/非回环一致
 - [ ] 安装；Pod 就绪
@@ -50,7 +50,7 @@ https://github.com/finogeeks/finguard/blob/main/docs/customer-deploy.zh.md
 ### 2. 部署
 
 跟 `docs/install-cluster.zh.md`。先 `helm template` 再 apply。镜像仓库
-`ghcr.io/geeksfino/finguard`。图表不模板化 Vault 注入开关。
+`ghcr.io/finogeeks/finguard`。图表不模板化 Vault 注入开关。
 
 ### 3. 验收
 

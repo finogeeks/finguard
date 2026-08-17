@@ -39,7 +39,7 @@ kubectl create secret tls finguard-grpc-tls --cert=tls.crt --key=tls.key
 
 ```bash
 helm template finguard distribution/helm/finguard \
-  --set image.repository=ghcr.io/geeksfino/finguard \
+  --set image.repository=ghcr.io/finogeeks/finguard \
   --set image.tag=0.1.0 \
   --set replicaCount=2 \
   --set oidc.issuer='https://idp.example.com' \

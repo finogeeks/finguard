@@ -8,8 +8,8 @@ FinGuard 是智能体与企业写接口（CRM、ERP、工单、内部 HTTP）之
 
 ## 本机实验（建议先做这一步）
 
-需要带 Compose 的 Docker。拉取 `ghcr.io/geeksfino/finguard` 与
-`ghcr.io/geeksfino/finguard-mock-erp`。自带 Postgres 与 mock ERP。桩身份。
+需要带 Compose 的 Docker。拉取 `ghcr.io/finogeeks/finguard` 与
+`ghcr.io/finogeeks/finguard-mock-erp`。自带 Postgres 与 mock ERP。桩身份。
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
@@ -42,9 +42,9 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 
 | 镜像 | 内容 |
 | --- | --- |
-| `ghcr.io/geeksfino/finguard:<version>` | 产品：`finguard` + 钉死的 agentgateway |
-| `ghcr.io/geeksfino/finguard-mock-erp:<version>` | 仅实验夹具 |
+| `ghcr.io/finogeeks/finguard:<version>` | 产品：`finguard` + 钉死的 agentgateway |
+| `ghcr.io/finogeeks/finguard-mock-erp:<version>` | 仅实验夹具 |
 
-公开 git 是 [`finogeeks/finguard`](https://github.com/finogeeks/finguard)。镜像目前发在 `ghcr.io/geeksfino`（GitHub Actions token）。钉死版本。
+公开 git 是 [`finogeeks/finguard`](https://github.com/finogeeks/finguard)。钉死版本。生产不要跑 `:latest`。Postgres **不在** 产品镜像里。
 
 若 GHCR 包仍为私有，先 `docker login ghcr.io`，或在已导入镜像后设 `FINGUARD_SKIP_PULL=1`。
