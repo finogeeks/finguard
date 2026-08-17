@@ -19,7 +19,7 @@ This chart does **not** ship a signed image or SBOM. Default image is
 `ghcr.io/finogeeks/finguard`. Pin `image.tag` (prefer a digest). Off-loopback: set
 `tls.enabled` and create `tls.secretName` **before** install (default
 `tls.enabled=true` expects that secret). Same-pod greenfield sidecar may set
-`tls.enabled=false`. Laptop lab: `docs/public-finguard/try.sh`.
+`tls.enabled=false`. Laptop lab: https://github.com/finogeeks/finguard (`try.sh`).
 
 Live OIDC: `oidc.issuer`, `oidc.audience`, and `oidc.jwksUrl` (sets
 `FINGUARD_OIDC_JWKS_URL`). RSA PEM / HS256 remain env-only overlays. Production

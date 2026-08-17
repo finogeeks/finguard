@@ -42,7 +42,14 @@ FINGUARD_SKIP_PULL=1 ./try.sh
 ```
 
 Pass if the script prints `OK: erp writes=1 (replay held exactly-once)` and lists
-`:13000` / `:19191` / `:18080`.
+`:13000` / `:19191` / `:18080`. Then run integration checks:
+
+```bash
+./lab-exercises.sh
+```
+
+Workbook: https://github.com/finogeeks/finguard/blob/main/docs/lab.md
+(Chinese: `docs/lab.zh.md`).
 
 Admin bearer: `local-compose-token`.
 

@@ -7,7 +7,7 @@ the skill file — not the private engine tree.
 
 | Skill | When |
 | --- | --- |
-| [finguard-try](finguard-try/SKILL.md) | Laptop lab, exactly-once smoke |
+| [finguard-try](finguard-try/SKILL.md) | Laptop lab, exactly-once smoke, `lab-exercises.sh` |
 | [finguard-customer-deploy](finguard-customer-deploy/SKILL.md) | Helm + first real write |
 
 Further reading (absolute URLs only inside skill bodies if you add more later):

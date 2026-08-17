@@ -1,5 +1,7 @@
 # Contributing
 
+**中文：** [CONTRIBUTING-zh.md](CONTRIBUTING-zh.md)
+
 This public repository is a **documentation and install pack**. Engine source is
 not here.
 

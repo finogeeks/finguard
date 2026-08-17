@@ -1,6 +1,17 @@
 # FinGuard (public pack)
 
-**中文：** [README.zh.md](README.zh.md)
+**中文文档：** [README.zh.md](README.zh.md) ·
+[文档索引](docs/README.zh.md) ·
+[快速开始](docs/getting-started.zh.md) ·
+[本机集成实验](docs/lab.zh.md) ·
+[集群安装](docs/install-cluster.zh.md)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
+./lab-exercises.sh   # 流水、恰好一次、故障关闭（需实验已起来）
+```
+
+---
 
 FinGuard is the runtime governance layer between agents and enterprise write APIs
 (CRM, ERP, ticketing, internal HTTP). Agents do not get raw enterprise credentials.
@@ -22,18 +33,27 @@ Or from a clone:
 
 ```bash
 ./try.sh
+./lab-exercises.sh
 ./try.sh --down
 ```
 
-The lab proves the product process (front door, exactly-once replay). It does **not**
-prove your IdP or a real ERP.
+`try.sh` proves the front door and exactly-once replay. `lab-exercises.sh` then
+checks journal gating, an agent-shaped write, fail-closed, and a sample Action
+Manifest. Docs: [getting-started.md](docs/getting-started.md), [lab.md](docs/lab.md).
+
+If `docker pull` returns `denied`, the GHCR packages are still private — that is
+not fixed by cloning this repo. See [lab.md](docs/lab.md#troubleshooting).
+
+The lab does **not** prove your IdP or a real ERP.
 
 ## Cluster install
 
 Your Postgres 16+, IdP JWKS, and one real write API. Same product image, Helm chart
 in [`distribution/helm/finguard/`](distribution/helm/finguard/):
 
+- [Docs index](docs/README.md)
 - [Getting started](docs/getting-started.md) — lab
+- [Laptop integration checks](docs/lab.md) — after `try.sh`
 - [Install on a cluster](docs/install-cluster.md) — Helm
 - [First protected service](docs/customer-deploy.md) — cutover
 

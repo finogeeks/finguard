@@ -6,7 +6,7 @@
 
 | 技能 | 何时 |
 | --- | --- |
-| [finguard-try](finguard-try/SKILL-zh.md) | 本机实验、恰好一次冒烟 |
+| [finguard-try](finguard-try/SKILL-zh.md) | 本机实验、恰好一次冒烟、`lab-exercises.sh` |
 | [finguard-customer-deploy](finguard-customer-deploy/SKILL-zh.md) | Helm + 第一条真实写 |
 
 延伸阅读（技能正文只用绝对 URL）：

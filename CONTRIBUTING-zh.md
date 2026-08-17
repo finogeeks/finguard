@@ -1,5 +1,7 @@
 # 贡献
 
+**English:** [CONTRIBUTING.md](CONTRIBUTING.md)
+
 本公开仓库是 **文档与安装包**。引擎源码不在这里。
 
 | 类型 | 做法 |

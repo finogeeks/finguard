@@ -4,6 +4,8 @@ Public-facing notes for `finogeeks/finguard`. Unsigned images; no SBOM.
 
 ## [Unreleased]
 
+- Chinese docs index, lab workbook (`docs/lab.zh.md`), and `lab-exercises.sh`.
+
 ## [0.1.0] - 2026-08-17
 
 ### Added

@@ -59,10 +59,28 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' http://127.0.0.1:19191/
 ./try.sh --down
 ```
 
-## 5. 下一步
+## 5. 集成检查
+
+实验起来之后，做流水 / 故障关闭 / Action Manifest 检查：
+
+```bash
+./lab-exercises.sh
+```
+
+手册：[lab.zh.md](lab.zh.md)。把 HTTP 智能体指到 `http://127.0.0.1:13000`，不要指 mock ERP。
+
+## 6. 下一步
 
 把真实智能体指到真实写接口走集群路径：
 [install-cluster.zh.md](install-cluster.zh.md)，然后
 [customer-deploy.zh.md](customer-deploy.zh.md)。
 
 不要把 mock ERP 留在客户集群。不要把本实验当作 IdP 证明。
+
+## 排障
+
+| 现象 | 处理 |
+| --- | --- |
+| 拉 `ghcr.io/finogeeks/finguard` 出现 `denied` | GHCR 包仍是私有。`docker login`，或已导入镜像后 `FINGUARD_SKIP_PULL=1` |
+| 端口 `13000` / `19191` / `18080` 被占用 | 停掉占用进程，或 `./try.sh --down` |
+| Apple Silicon | 镜像是 `linux/amd64`；Docker Desktop 模拟是预期行为 |

@@ -62,9 +62,28 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' http://127.0.0.1:19191/
 ./try.sh --down
 ```
 
-## 5. Next
+## 5. Integration checks
+
+After the lab is up, run journal / fail-closed / Action Manifest checks:
+
+```bash
+./lab-exercises.sh
+```
+
+Workbook: [lab.md](lab.md) (中文：[lab.zh.md](lab.zh.md)). Point an HTTP agent at
+`http://127.0.0.1:13000`, not at the mock ERP.
+
+## 6. Next
 
 Pointing a real agent at a real write API is the cluster path:
 [install-cluster.md](install-cluster.md) then [customer-deploy.md](customer-deploy.md).
 
 Do not keep the mock ERP in a customer cluster. Do not treat this lab as IdP proof.
+
+## Troubleshooting
+
+| Symptom | What to do |
+| --- | --- |
+| `denied` pulling `ghcr.io/finogeeks/finguard` | GHCR package is still private. `docker login`, or `FINGUARD_SKIP_PULL=1` with loaded images |
+| Port `13000` / `19191` / `18080` in use | Stop the other listener, or `./try.sh --down` |
+| Apple Silicon | Images are `linux/amd64`; Docker Desktop emulation is expected |

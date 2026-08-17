@@ -25,8 +25,6 @@ services:
       POSTGRES_USER: finguard
       POSTGRES_PASSWORD: finguard
       POSTGRES_DB: finguard
-    ports:
-      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U finguard -d finguard"]
       interval: 5s

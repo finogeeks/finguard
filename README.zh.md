@@ -1,6 +1,7 @@
 # FinGuard（公开发行包）
 
-**English:** [README.md](README.md)
+**English:** [README.md](README.md) ·
+[Docs index](docs/README.md)
 
 FinGuard 是智能体与企业写接口（CRM、ERP、工单、内部 HTTP）之间的运行时治理层。智能体拿不到企业系统的原始凭证。
 
@@ -19,17 +20,24 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 
 ```bash
 ./try.sh
+./lab-exercises.sh
 ./try.sh --down
 ```
 
-实验只证明产品过程（前门、恰好一次重放）。**不能** 证明你们的 IdP 或真实 ERP。
+`try.sh` 证明前门和恰好一次重放。`lab-exercises.sh` 再查流水门禁、按智能体方式写入、故障关闭、以及一条示例 Action Manifest。手册：[快速开始](docs/getting-started.zh.md)、[本机集成实验](docs/lab.zh.md)。
+
+若 `docker pull` 返回 `denied`，说明 GHCR 包仍是私有 —— 克隆本仓库解决不了。见 [排障](docs/lab.zh.md#排障)。
+
+实验 **不能** 证明你们的 IdP 或真实 ERP。
 
 ## 集群安装
 
 你们自己的 Postgres 16+、IdP JWKS、以及一条真实写接口。同一产品镜像，图表在
 [`distribution/helm/finguard/`](distribution/helm/finguard/)：
 
+- [文档索引](docs/README.zh.md)
 - [快速开始](docs/getting-started.zh.md) — 本机实验
+- [本机集成检查](docs/lab.zh.md) — `try.sh` 之后
 - [集群安装](docs/install-cluster.zh.md) — Helm
 - [保护第一个存量服务](docs/customer-deploy.zh.md) — 切流
 

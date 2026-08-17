@@ -55,6 +55,8 @@ Examples:
   ./try.sh --version 0.1.0
   FINGUARD_SKIP_PULL=1 ./try.sh
   ./try.sh --down
+
+Chinese docs: docs/getting-started.zh.md  docs/lab.zh.md
 EOF
 }
 
@@ -218,8 +220,13 @@ Lab is up.
   Mock ERP (lab only):          http://127.0.0.1:18080
   Admin token:                  local-compose-token
 
+Next (journal, fail-closed, Action Manifest):
+  $( [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/lab-exercises.sh" ] && echo "$SCRIPT_DIR/lab-exercises.sh" || echo "sh ${PACK_DIR}/lab-exercises.sh" )
+  docs/lab.md · 中文: docs/lab.zh.md
+
 Stop:
   $( [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/try.sh" ] && echo "$SCRIPT_DIR/try.sh --down" || echo "FINGUARD_PACK_DIR=${PACK_DIR} sh ${PACK_DIR}/try.sh --down" )
 
 Cluster install (your Postgres + IdP): docs/install-cluster.md
+  中文: docs/install-cluster.zh.md
 EOF

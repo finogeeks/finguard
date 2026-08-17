@@ -39,7 +39,13 @@ FINGUARD_SKIP_PULL=1 ./try.sh
 ```
 
 脚本打印 `OK: erp writes=1 (replay held exactly-once)` 并列出
-`:13000` / `:19191` / `:18080` 即为通过。
+`:13000` / `:19191` / `:18080` 即为通过。然后做集成检查：
+
+```bash
+./lab-exercises.sh
+```
+
+手册：https://github.com/finogeeks/finguard/blob/main/docs/lab.zh.md
 
 管理 Bearer：`local-compose-token`。
 
