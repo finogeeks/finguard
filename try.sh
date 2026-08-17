@@ -167,7 +167,8 @@ if [ "$ACTION" = "down" ]; then
 fi
 
 cat >&2 <<EOF
-FinGuard lab (unsigned image, no SBOM).
+FinGuard lab — one stack (unsigned image, no SBOM).
+  FinGuard + agentgateway + Postgres (Compose). Mock ERP is lab-only.
   pack:     ${PACK_DIR}
   product:  ${PRODUCT_IMAGE}
   mock-erp: ${MOCK_IMAGE}

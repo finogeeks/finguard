@@ -16,7 +16,7 @@ helm template finguard distribution/helm/finguard --set agentgateway.enabled=fal
 ```
 
 This chart does **not** ship a signed image or SBOM. Default image is
-`ghcr.io/finogeeks/finguard`. Pin `image.tag` (prefer a digest). Off-loopback: set
+`ghcr.io/finogeeks/finguard` (`linux/amd64` and `linux/arm64`). Pin `image.tag` (prefer a digest). Off-loopback: set
 `tls.enabled` and create `tls.secretName` **before** install (default
 `tls.enabled=true` expects that secret). Same-pod greenfield sidecar may set
 `tls.enabled=false`. Laptop lab: https://github.com/finogeeks/finguard (`try.sh`).

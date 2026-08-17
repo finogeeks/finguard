@@ -62,8 +62,7 @@ Stop: `./try.sh --down`.
 ## If pull fails
 
 GHCR packages start private. `docker login ghcr.io`, or load vendor-provided images
-and set `FINGUARD_SKIP_PULL=1`. Apple Silicon without an arm64 tag uses amd64 via
-emulation — slower, still valid for the lab.
+and set `FINGUARD_SKIP_PULL=1`. Images are `linux/amd64` and `linux/arm64`.
 
 ## Next
 

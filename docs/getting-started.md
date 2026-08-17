@@ -2,9 +2,9 @@
 
 中文：[getting-started.zh.md](getting-started.zh.md)
 
-Bring FinGuard up on a workstation in a few minutes. This path uses Docker Compose
-and GHCR. It is a **lab**: mock ERP, bundled Postgres, stub caller identity, unsigned
-image.
+Bring FinGuard up on a workstation in a few minutes. **One command** starts the
+product stack: FinGuard + pinned agentgateway + Postgres. Mock ERP and stub
+identity are lab-only. Unsigned image.
 
 ## 1. Prerequisites
 
@@ -86,4 +86,4 @@ Do not keep the mock ERP in a customer cluster. Do not treat this lab as IdP pro
 | --- | --- |
 | `denied` pulling `ghcr.io/finogeeks/finguard` | GHCR package is still private. `docker login`, or `FINGUARD_SKIP_PULL=1` with loaded images |
 | Port `13000` / `19191` / `18080` in use | Stop the other listener, or `./try.sh --down` |
-| Apple Silicon | Images are `linux/amd64`; Docker Desktop emulation is expected |
+| Apple Silicon / linux/arm64 | Images ship `linux/amd64` and `linux/arm64`. Docker picks the native one |

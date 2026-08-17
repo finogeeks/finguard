@@ -125,7 +125,7 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' \
 | --- | --- |
 | 拉 GHCR 出现 `denied` / 401 | 包仍是私有。登录，或 skip-pull 厂商镜像 |
 | `13000` / `19191` / `18080` 报 `address already in use` | 停掉占用进程，或 `./try.sh --down` 再试 |
-| Apple Silicon 很慢 / qemu | 镜像只有 `linux/amd64`；Docker Desktop 模拟是预期行为 |
+| Apple Silicon / linux/arm64 | 镜像同时发 `linux/amd64` 与 `linux/arm64`。Docker 会选原生架构 |
 | `missing required command: python3` | 安装 Python 3；`try.sh` 用它断言写入次数 |
 | `curl \| sh` 提示缺 git | 一键脚本会克隆到 `~/.finguard-try`；安装 `git`，或先克隆本仓库再 `./try.sh` |
 

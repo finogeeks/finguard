@@ -128,7 +128,7 @@ Cluster path (your Postgres + IdP + real write API):
 | --- | --- |
 | `denied` / 401 pulling GHCR | Package visibility is still private. Login, or skip-pull vendor images |
 | `bind: address already in use` on `13000` / `19191` / `18080` | Stop the other process, or `./try.sh --down` and retry |
-| Apple Silicon slow / qemu | Images are `linux/amd64` only; Docker Desktop emulation is expected |
+| Apple Silicon / linux/arm64 | Images ship `linux/amd64` and `linux/arm64`. Docker picks the native one |
 | `missing required command: python3` | Install Python 3; `try.sh` uses it to assert write counts |
 | Piped `curl \| sh` wants git | The one-liner clones into `~/.finguard-try`; install `git` or clone this repo and run `./try.sh` |
 

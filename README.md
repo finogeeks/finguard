@@ -22,8 +22,13 @@ have no SBOM — do not treat them as a GA supply-chain claim.
 
 ## Quick lab (recommended first)
 
-Needs Docker with Compose. Pulls `ghcr.io/finogeeks/finguard` and
-`ghcr.io/finogeeks/finguard-mock-erp`. Bundled Postgres + mock ERP. Stub identity.
+**One command is the product.** `try.sh` starts FinGuard + pinned agentgateway +
+Postgres as one Compose stack. You do not install those three yourself. The same
+product image holds FinGuard and agentgateway (different entrypoint). Postgres is
+the official `postgres:16` image, started for you. Lab-only mock ERP is extra.
+
+Needs Docker with Compose. Pulls `linux/amd64` and `linux/arm64` from GHCR
+(Apple Silicon / Graviton use arm64 natively). Stub identity.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
@@ -48,8 +53,9 @@ The lab does **not** prove your IdP or a real ERP.
 
 ## Cluster install
 
-Your Postgres 16+, IdP JWKS, and one real write API. Same product image, Helm chart
-in [`distribution/helm/finguard/`](distribution/helm/finguard/):
+Not a no-prompt black box. Same product image (FinGuard + agentgateway sidecar),
+**you** provide Postgres 16+, IdP JWKS, and one real write API. Helm chart in
+[`distribution/helm/finguard/`](distribution/helm/finguard/):
 
 - [Docs index](docs/README.md)
 - [Getting started](docs/getting-started.md) — lab
@@ -66,8 +72,9 @@ in [`distribution/helm/finguard/`](distribution/helm/finguard/):
 
 | Image | What |
 | --- | --- |
-| `ghcr.io/finogeeks/finguard:<version>` | Product: `finguard` + pinned agentgateway |
-| `ghcr.io/finogeeks/finguard-mock-erp:<version>` | Lab fixture only |
+| `ghcr.io/finogeeks/finguard:<version>` | Product: `finguard` + pinned agentgateway (`linux/amd64`, `linux/arm64`) |
+| `ghcr.io/finogeeks/finguard-mock-erp:<version>` | Lab fixture only (same platforms) |
+| `postgres:16-alpine` | Lab DB via Compose — not in the product image |
 
 Public git is [`finogeeks/finguard`](https://github.com/finogeeks/finguard). Pin a version.
 Do not run `:latest` in production. Postgres is **not** in the product image.

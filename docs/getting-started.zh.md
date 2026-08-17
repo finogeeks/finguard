@@ -2,7 +2,8 @@
 
 English: [getting-started.md](getting-started.md)
 
-在工作站上几分钟拉起 FinGuard。这条路径用 Docker Compose 和 GHCR。这是 **实验**：mock ERP、自带 Postgres、桩身份、未签名镜像。
+在工作站上几分钟拉起 FinGuard。**一条命令** 拉起产品栈：FinGuard + 钉死的
+agentgateway + Postgres。mock ERP 和桩身份只给实验。未签名镜像。
 
 ## 1. 前提
 
@@ -83,4 +84,4 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' http://127.0.0.1:19191/
 | --- | --- |
 | 拉 `ghcr.io/finogeeks/finguard` 出现 `denied` | GHCR 包仍是私有。`docker login`，或已导入镜像后 `FINGUARD_SKIP_PULL=1` |
 | 端口 `13000` / `19191` / `18080` 被占用 | 停掉占用进程，或 `./try.sh --down` |
-| Apple Silicon | 镜像是 `linux/amd64`；Docker Desktop 模拟是预期行为 |
+| Apple Silicon / linux/arm64 | 镜像同时发 `linux/amd64` 与 `linux/arm64`。Docker 会选原生架构 |

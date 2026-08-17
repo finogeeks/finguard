@@ -58,7 +58,7 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' http://127.0.0.1:19191/
 ## 拉取失败
 
 GHCR 包默认私有。`docker login ghcr.io`，或导入厂商提供的镜像并设 `FINGUARD_SKIP_PULL=1`。
-没有 arm64 标签时，Apple Silicon 用 amd64 模拟 —— 更慢，实验仍有效。
+镜像是 `linux/amd64` 与 `linux/arm64`。
 
 ## 下一步
 

@@ -9,8 +9,12 @@ FinGuard 是智能体与企业写接口（CRM、ERP、工单、内部 HTTP）之
 
 ## 本机实验（建议先做这一步）
 
-需要带 Compose 的 Docker。拉取 `ghcr.io/finogeeks/finguard` 与
-`ghcr.io/finogeeks/finguard-mock-erp`。自带 Postgres 与 mock ERP。桩身份。
+**一条命令就是产品。** `try.sh` 用 Compose 一次拉起 FinGuard + 钉死的 agentgateway +
+Postgres。这三件不用你自己装。产品镜像里同时有 FinGuard 和 agentgateway（不同入口）。
+Postgres 是官方 `postgres:16` 镜像，由脚本拉起。mock ERP 只给实验用。
+
+需要带 Compose 的 Docker。GHCR 提供 `linux/amd64` 与 `linux/arm64`（Apple Silicon /
+Graviton 原生 arm64）。桩身份。
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
@@ -32,7 +36,8 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 
 ## 集群安装
 
-你们自己的 Postgres 16+、IdP JWKS、以及一条真实写接口。同一产品镜像，图表在
+不是一条命令的黑盒。同一产品镜像（FinGuard + agentgateway 边车），**你们** 提供
+Postgres 16+、IdP JWKS、以及一条真实写接口。图表在
 [`distribution/helm/finguard/`](distribution/helm/finguard/)：
 
 - [文档索引](docs/README.zh.md)
@@ -50,8 +55,9 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 
 | 镜像 | 内容 |
 | --- | --- |
-| `ghcr.io/finogeeks/finguard:<version>` | 产品：`finguard` + 钉死的 agentgateway |
-| `ghcr.io/finogeeks/finguard-mock-erp:<version>` | 仅实验夹具 |
+| `ghcr.io/finogeeks/finguard:<version>` | 产品：`finguard` + 钉死的 agentgateway（`linux/amd64`、`linux/arm64`） |
+| `ghcr.io/finogeeks/finguard-mock-erp:<version>` | 仅实验夹具（同一平台） |
+| `postgres:16-alpine` | 实验库，由 Compose 拉起 —— 不在产品镜像里 |
 
 公开 git 是 [`finogeeks/finguard`](https://github.com/finogeeks/finguard)。钉死版本。生产不要跑 `:latest`。Postgres **不在** 产品镜像里。
 
