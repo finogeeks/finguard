@@ -1,7 +1,7 @@
 # Lab Compose for the public pack. Pulls GHCR — no source build.
 #
-#   FINGUARD_IMAGE=ghcr.io/finogeeks/finguard:0.1.0 \
-#   FINGUARD_MOCK_ERP_IMAGE=ghcr.io/finogeeks/finguard-mock-erp:0.1.0 \
+#   FINGUARD_IMAGE=ghcr.io/geeksfino/finguard:0.1.0 \
+#   FINGUARD_MOCK_ERP_IMAGE=ghcr.io/geeksfino/finguard-mock-erp:0.1.0 \
 #   docker compose -f distribution/compose/docker-compose.yml --profile greenfield up -d
 #
 # Prefer ./try.sh. This file is a lab: mock ERP + bundled Postgres.
@@ -9,7 +9,7 @@
 
 services:
   mock-erp:
-    image: ${FINGUARD_MOCK_ERP_IMAGE:-ghcr.io/finogeeks/finguard-mock-erp:0.1.0}
+    image: ${FINGUARD_MOCK_ERP_IMAGE:-ghcr.io/geeksfino/finguard-mock-erp:0.1.0}
     ports:
       - "18080:18080"
     command: ["--bind", "0.0.0.0:18080"]
@@ -35,7 +35,7 @@ services:
 
   finguard:
     profiles: ["control-plane", "greenfield"]
-    image: ${FINGUARD_IMAGE:-ghcr.io/finogeeks/finguard:0.1.0}
+    image: ${FINGUARD_IMAGE:-ghcr.io/geeksfino/finguard:0.1.0}
     environment:
       FINGUARD_ADMIN_TOKEN: local-compose-token
       FINGUARD_POSTGRES_URL: postgres://finguard:finguard@postgres:5432/finguard
@@ -70,7 +70,7 @@ services:
 
   agentgateway:
     profiles: ["greenfield"]
-    image: ${FINGUARD_IMAGE:-ghcr.io/finogeeks/finguard:0.1.0}
+    image: ${FINGUARD_IMAGE:-ghcr.io/geeksfino/finguard:0.1.0}
     entrypoint: ["/usr/local/bin/agentgateway"]
     command: ["-f", "/opt/finguard/distribution/compose/agentgateway.yaml"]
     ports:

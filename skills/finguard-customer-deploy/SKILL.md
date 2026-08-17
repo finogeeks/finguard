@@ -31,7 +31,7 @@ It is not a substitute for handing the customer the markdown.
 
 ```
 - [ ] Topology chosen (greenfield vs existing-gateway)
-- [ ] Image: ghcr.io/finogeeks/finguard:<version> (pin tag or digest)
+- [ ] Image: ghcr.io/geeksfino/finguard:<version> (pin tag or digest)
 - [ ] Helm values: issuer, jwksUrl, secrets
 - [ ] helm template reviewed; tls.enabled matches loopback vs off-loopback
 - [ ] Install; pods ready
@@ -53,7 +53,7 @@ Off-loopback: TLS secret required before install when `tls.enabled=true`.
 ### 2. Deploy
 
 Follow `docs/install-cluster.md`. Always `helm template` before apply. Image
-repository `ghcr.io/finogeeks/finguard`. Chart does not template Vault inject flags.
+repository `ghcr.io/geeksfino/finguard`. Chart does not template Vault inject flags.
 
 ### 3. Validate
 

@@ -11,8 +11,8 @@ have no SBOM — do not treat them as a GA supply-chain claim.
 
 ## Quick lab (recommended first)
 
-Needs Docker with Compose. Pulls `ghcr.io/finogeeks/finguard` and
-`ghcr.io/finogeeks/finguard-mock-erp`. Bundled Postgres + mock ERP. Stub identity.
+Needs Docker with Compose. Pulls `ghcr.io/geeksfino/finguard` and
+`ghcr.io/geeksfino/finguard-mock-erp`. Bundled Postgres + mock ERP. Stub identity.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
@@ -46,10 +46,11 @@ in [`distribution/helm/finguard/`](distribution/helm/finguard/):
 
 | Image | What |
 | --- | --- |
-| `ghcr.io/finogeeks/finguard:<version>` | Product: `finguard` + pinned agentgateway |
-| `ghcr.io/finogeeks/finguard-mock-erp:<version>` | Lab fixture only |
+| `ghcr.io/geeksfino/finguard:<version>` | Product: `finguard` + pinned agentgateway |
+| `ghcr.io/geeksfino/finguard-mock-erp:<version>` | Lab fixture only |
 
-Pin a version. Do not run `:latest` in production. Postgres is **not** in the product image.
+Public git is [`finogeeks/finguard`](https://github.com/finogeeks/finguard). Images
+currently publish under `ghcr.io/geeksfino` (GitHub Actions token). Pin a version.
 
 If the GHCR package is still private, `docker login ghcr.io` once, or set
 `FINGUARD_SKIP_PULL=1` after loading images your vendor gave you.

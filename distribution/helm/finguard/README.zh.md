@@ -11,7 +11,7 @@ helm template finguard distribution/helm/finguard
 helm template finguard distribution/helm/finguard --set agentgateway.enabled=false
 ```
 
-本图表 **不** 附带已签名镜像或 SBOM。默认镜像是 `ghcr.io/finogeeks/finguard`。钉死 `image.tag`（有 digest 后优先钉 digest）。非回环：打开 `tls.enabled`，并在安装 **之前** 创建 `tls.secretName`（默认 `tls.enabled=true` 要求该 Secret 已存在）。同 Pod 绿地边车可以设 `tls.enabled=false`。本机实验：`docs/public-finguard/try.sh`（或公开的 `finogeeks/finguard` 包装）。
+本图表 **不** 附带已签名镜像或 SBOM。默认镜像是 `ghcr.io/geeksfino/finguard`。钉死 `image.tag`（有 digest 后优先钉 digest）。非回环：打开 `tls.enabled`，并在安装 **之前** 创建 `tls.secretName`（默认 `tls.enabled=true` 要求该 Secret 已存在）。同 Pod 绿地边车可以设 `tls.enabled=false`。本机实验：`docs/public-finguard/try.sh`（或公开的 `finogeeks/finguard` 包装）。
 
 线上 OIDC：`oidc.issuer`、`oidc.audience`、`oidc.jwksUrl`（写入 `FINGUARD_OIDC_JWKS_URL`）。RSA PEM / HS256 仍需用环境变量 overlay。生产 IdP 证明仍为 inbox。GA go 仍为否。
 

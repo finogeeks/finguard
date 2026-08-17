@@ -62,5 +62,5 @@ curl -fsS -H "Authorization: Bearer $FINGUARD_ADMIN_TOKEN" \
 ## 不要宣称
 
 - 本机 `try.sh` 通过 = 生产 IdP 或设计伙伴 ERP
-- 未签名的 `ghcr.io/finogeeks/finguard` = 已签名供应链
+- 未签名的 `ghcr.io/geeksfino/finguard` = 已签名供应链
 - 本流程 = GA go
