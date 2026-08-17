@@ -1,6 +1,6 @@
 apiVersion: v2
 name: finguard
-description: "FinGuard action gateway (one image: finguard + pinned agentgateway; Postgres external)"
+description: "FinGuard: one image (finguard + agentgateway); chart starts Postgres unless you bring your own"
 type: application
 version: 0.1.0
 appVersion: "0.1.0"

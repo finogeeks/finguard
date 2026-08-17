@@ -30,11 +30,9 @@ It is not a substitute for handing the customer the markdown.
 ## Workflow
 
 ```
-- [ ] Topology chosen (greenfield vs existing-gateway)
+- [ ] One-shot Helm: backendHost = real write API (chart starts Postgres + admin token)
 - [ ] Image: ghcr.io/finogeeks/finguard:<version> (pin tag or digest)
-- [ ] Helm values: issuer, jwksUrl, secrets
-- [ ] helm template reviewed; tls.enabled matches loopback vs off-loopback
-- [ ] Install; pods ready
+- [ ] helm upgrade --install; pods ready
 - [ ] HTTP probes
 - [ ] Fail-closed + exactly-once
 - [ ] First write path routed; Action Manifest registered

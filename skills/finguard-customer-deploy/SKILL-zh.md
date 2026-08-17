@@ -27,11 +27,9 @@ https://github.com/finogeeks/finguard/blob/main/docs/customer-deploy.zh.md
 ## 流程
 
 ```
-- [ ] 已选拓扑（绿地 vs 已有网关）
+- [ ] 一键 Helm：backendHost = 真实写接口（图表启动 Postgres 和管理令牌）
 - [ ] 镜像：ghcr.io/finogeeks/finguard:<version>（钉 tag 或 digest）
-- [ ] Helm 值：issuer、jwksUrl、Secret
-- [ ] 已审查 helm template；tls.enabled 与回环/非回环一致
-- [ ] 安装；Pod 就绪
+- [ ] helm upgrade --install；Pod 就绪
 - [ ] HTTP 探测
 - [ ] 故障关闭 + 恰好一次
 - [ ] 第一条写路径已接入；Action Manifest 已登记

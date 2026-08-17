@@ -3,7 +3,7 @@
 中文：[customer-deploy.zh.md](customer-deploy.zh.md)
 
 For customer IT or an on-site engineer. Lab first: [getting-started.md](getting-started.md)
-then [lab.md](lab.md). Cluster install: [install-cluster.md](install-cluster.md).
+then [lab.md](lab.md). Cluster install is one Helm command (chart starts Postgres): [install-cluster.md](install-cluster.md).
 
 **Status:** unsigned image, no SBOM. Do not claim GA, 信创 directory listing, or 密评.
 

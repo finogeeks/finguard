@@ -10,25 +10,33 @@ service:
   httpPort: 8088
   gatewayPort: 13000
 
+# Same-pod agentgateway talks to FinGuard on loopback. Turn on for an
+# existing off-loopback gateway and create tls.secretName first.
 tls:
-  enabled: true
+  enabled: false
   secretName: finguard-grpc-tls
 
 oidc:
   issuer: ""
   audience: finguard
-  # RS256 JWKS URL → FINGUARD_OIDC_JWKS_URL. Empty = stub identity.
-  # Production IdP proof stays inbox until a live partner JWKS is signed off.
+  # RS256 JWKS URL → FINGUARD_OIDC_JWKS_URL. Empty = stub identity (lab / first start).
   jwksUrl: ""
 
+# Empty = chart creates Secret finguard-admin.
 adminTokenExistingSecret: ""
 
 postgres:
+  # Default: chart starts Postgres. Set false and urlExistingSecret to use yours.
+  bundled: true
+  image: postgres:16-alpine
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClassName: ""
   urlExistingSecret: ""
 
 # Same image as FinGuard. Sidecar shares the pod network (127.0.0.1).
 # Set enabled: false for existing-gateway (customer Envoy/APISIX).
-# Postgres is not in this chart — point postgres.urlExistingSecret at theirs.
 agentgateway:
   enabled: true
   backendHost: "erp.example.svc:80"

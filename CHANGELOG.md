@@ -5,6 +5,7 @@ Public-facing notes for `finogeeks/finguard`. Unsigned images; no SBOM.
 ## [Unreleased]
 
 - GHCR images are `linux/amd64` and `linux/arm64`.
+- Helm one-shot: chart starts Postgres unless `postgres.bundled=false`.
 - Chinese docs index, lab workbook (`docs/lab.zh.md`), and `lab-exercises.sh`.
 
 ## [0.1.0] - 2026-08-17

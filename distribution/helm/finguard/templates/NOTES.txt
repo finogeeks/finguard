@@ -1,0 +1,15 @@
+FinGuard is up (unsigned image, no SBOM).
+
+  Gateway (agents):  Service finguard port {{ .Values.service.gatewayPort }}
+  FinGuard HTTP:     Service finguard port {{ .Values.service.httpPort }}
+
+Admin token:
+  kubectl get secret {{ .Values.adminTokenExistingSecret | default "finguard-admin" }} -o jsonpath='{.data.token}' | base64 -d; echo
+
+{{- if .Values.postgres.bundled }}
+Postgres is included in this release (one-shot). To use a database you already run:
+  --set postgres.bundled=false --set postgres.urlExistingSecret=<secret-with-key-url>
+{{- end }}
+
+Set agentgateway.backendHost to the real write API. Do not point it at mock ERP.
+IdP (issuer + JWKS) is optional on first start; stub identity is not a customer pass.

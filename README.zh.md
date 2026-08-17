@@ -36,8 +36,7 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 
 ## 集群安装
 
-不是一条命令的黑盒。同一产品镜像（FinGuard + agentgateway 边车），**你们** 提供
-Postgres 16+、IdP JWKS、以及一条真实写接口。图表在
+**一条 Helm 命令** 拉起 FinGuard + agentgateway + Postgres。你只要给真实写接口的地址。图表在
 [`distribution/helm/finguard/`](distribution/helm/finguard/)：
 
 - [文档索引](docs/README.zh.md)

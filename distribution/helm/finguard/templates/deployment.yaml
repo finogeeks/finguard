@@ -14,6 +14,15 @@ spec:
       labels:
         app: finguard
     spec:
+      {{- if .Values.postgres.bundled }}
+      initContainers:
+        - name: wait-postgres
+          image: {{ .Values.postgres.image | quote }}
+          command:
+            - sh
+            - -c
+            - until pg_isready -h finguard-postgres -U finguard -d finguard; do sleep 2; done
+      {{- end }}
       {{- if or .Values.agentgateway.enabled .Values.tls.enabled }}
       volumes:
         {{- if .Values.agentgateway.enabled }}
@@ -67,12 +76,24 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.adminTokenExistingSecret }}
                   key: token
+            {{- else }}
+            - name: FINGUARD_ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: finguard-admin
+                  key: token
             {{- end }}
             {{- if .Values.postgres.urlExistingSecret }}
             - name: FINGUARD_POSTGRES_URL
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.postgres.urlExistingSecret }}
+                  key: url
+            {{- else if .Values.postgres.bundled }}
+            - name: FINGUARD_POSTGRES_URL
+              valueFrom:
+                secretKeyRef:
+                  name: finguard-postgres
                   key: url
             {{- end }}
           {{- if .Values.tls.enabled }}

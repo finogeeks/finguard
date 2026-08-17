@@ -1,0 +1,109 @@
+{{- if and .Values.postgres.bundled .Values.postgres.urlExistingSecret }}
+{{- fail "postgres.bundled and postgres.urlExistingSecret cannot both be set" }}
+{{- end }}
+{{- if and (not .Values.postgres.bundled) (not .Values.postgres.urlExistingSecret) }}
+{{- fail "set postgres.bundled=true or postgres.urlExistingSecret" }}
+{{- end }}
+{{- if .Values.postgres.bundled }}
+{{- $pw := randAlphaNum 24 }}
+{{- $existing := lookup "v1" "Secret" .Release.Namespace "finguard-postgres" }}
+{{- if and $existing $existing.data $existing.data.POSTGRES_PASSWORD }}
+{{- $pw = index $existing.data "POSTGRES_PASSWORD" | b64dec }}
+{{- end }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: finguard-postgres
+  labels:
+    app: finguard
+    app.kubernetes.io/component: postgres
+type: Opaque
+stringData:
+  POSTGRES_PASSWORD: {{ $pw | quote }}
+  url: {{ printf "postgres://finguard:%s@finguard-postgres:5432/finguard" $pw | quote }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: finguard-postgres
+  labels:
+    app: finguard
+    app.kubernetes.io/component: postgres
+spec:
+  selector:
+    app: finguard-postgres
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres
+---
+{{- if .Values.postgres.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: finguard-postgres
+  labels:
+    app: finguard
+    app.kubernetes.io/component: postgres
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.postgres.persistence.size | quote }}
+  {{- if .Values.postgres.persistence.storageClassName }}
+  storageClassName: {{ .Values.postgres.persistence.storageClassName | quote }}
+  {{- end }}
+---
+{{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finguard-postgres
+  labels:
+    app: finguard
+    app.kubernetes.io/component: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: finguard-postgres
+  template:
+    metadata:
+      labels:
+        app: finguard-postgres
+        app.kubernetes.io/component: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: {{ .Values.postgres.image | quote }}
+          ports:
+            - name: postgres
+              containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: finguard
+            - name: POSTGRES_DB
+              value: finguard
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: finguard-postgres
+                  key: POSTGRES_PASSWORD
+          {{- if .Values.postgres.persistence.enabled }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+          {{- end }}
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "finguard", "-d", "finguard"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      {{- if .Values.postgres.persistence.enabled }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: finguard-postgres
+      {{- end }}
+{{- end }}

@@ -2,28 +2,23 @@
 
 中文：[README.zh.md](README.zh.md)
 
-Minimal reference chart for the standalone action gateway. **One product image**
-(`finguard` + pinned `agentgateway` binaries). Postgres and Vault stay outside
-the chart — point `postgres.urlExistingSecret` at a database you already run.
-
-Greenfield: `agentgateway.enabled=true` (default) starts an agentgateway sidecar
-in the same pod (loopback to FinGuard). Existing-gateway: set
-`agentgateway.enabled=false` and keep the customer's Envoy/APISIX.
+**One install starts the product:** FinGuard + pinned agentgateway (one image)
+and Postgres (started by this chart unless you turn that off).
 
 ```bash
-helm template finguard distribution/helm/finguard
-helm template finguard distribution/helm/finguard --set agentgateway.enabled=false
+helm upgrade --install finguard distribution/helm/finguard \
+  --set agentgateway.backendHost='erp.example.svc:80'
 ```
 
+Use your own database: `--set postgres.bundled=false --set postgres.urlExistingSecret=…`.
+Existing gateway: `--set agentgateway.enabled=false` (off-loopback needs TLS).
+
 This chart does **not** ship a signed image or SBOM. Default image is
-`ghcr.io/finogeeks/finguard` (`linux/amd64` and `linux/arm64`). Pin `image.tag` (prefer a digest). Off-loopback: set
-`tls.enabled` and create `tls.secretName` **before** install (default
-`tls.enabled=true` expects that secret). Same-pod greenfield sidecar may set
-`tls.enabled=false`. Laptop lab: https://github.com/finogeeks/finguard (`try.sh`).
+`ghcr.io/finogeeks/finguard` (`linux/amd64` and `linux/arm64`). Pin `image.tag`.
+Laptop lab: https://github.com/finogeeks/finguard (`try.sh`).
 
-Live OIDC: `oidc.issuer`, `oidc.audience`, and `oidc.jwksUrl` (sets
-`FINGUARD_OIDC_JWKS_URL`). RSA PEM / HS256 remain env-only overlays. Production
-IdP proof stays inbox. GA go stays NO.
+Live OIDC: `oidc.issuer`, `oidc.audience`, `oidc.jwksUrl`. Empty JWKS = stub
+identity. That is not a customer pass. GA go stays NO.
 
-Customer / SE procedure: [`docs/customer-deploy.md`](../../../docs/customer-deploy.md)
+Customer procedure: [`docs/customer-deploy.md`](../../../docs/customer-deploy.md)
 (Chinese: [`docs/customer-deploy.zh.md`](../../../docs/customer-deploy.zh.md)).

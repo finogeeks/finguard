@@ -53,9 +53,8 @@ The lab does **not** prove your IdP or a real ERP.
 
 ## Cluster install
 
-Not a no-prompt black box. Same product image (FinGuard + agentgateway sidecar),
-**you** provide Postgres 16+, IdP JWKS, and one real write API. Helm chart in
-[`distribution/helm/finguard/`](distribution/helm/finguard/):
+**One Helm command** starts FinGuard + agentgateway + Postgres. You only pass the
+write API hostname. Chart: [`distribution/helm/finguard/`](distribution/helm/finguard/).
 
 - [Docs index](docs/README.md)
 - [Getting started](docs/getting-started.md) — lab

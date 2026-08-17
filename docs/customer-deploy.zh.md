@@ -3,7 +3,7 @@
 English: [customer-deploy.md](customer-deploy.md)
 
 给客户信息化或现场工程师。先做实验：[getting-started.zh.md](getting-started.zh.md)，然后
-[lab.zh.md](lab.zh.md)。集群安装：[install-cluster.zh.md](install-cluster.zh.md)。
+[lab.zh.md](lab.zh.md)。集群安装是一条 Helm 命令（图表会启动 Postgres）：[install-cluster.zh.md](install-cluster.zh.md)。
 
 **状态：** 镜像未签名、无 SBOM。不要宣称 GA、已进信创目录或已获密评。
 

@@ -7,6 +7,7 @@
 ## [Unreleased]
 
 - GHCR 镜像为 `linux/amd64` 与 `linux/arm64`。
+- Helm 一键：默认启动 Postgres（`postgres.bundled=false` 可改用已有库）。
 - 中文文档索引与本机集成实验手册（`docs/lab.zh.md`、`lab-exercises.sh`）。
 
 ## [0.1.0] - 2026-08-17
