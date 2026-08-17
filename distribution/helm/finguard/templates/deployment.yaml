@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finguard
+  labels:
+    app: finguard
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: finguard
+  template:
+    metadata:
+      labels:
+        app: finguard
+    spec:
+      {{- if or .Values.agentgateway.enabled .Values.tls.enabled }}
+      volumes:
+        {{- if .Values.agentgateway.enabled }}
+        - name: agentgateway-config
+          configMap:
+            name: finguard-agentgateway
+        {{- end }}
+        {{- if .Values.tls.enabled }}
+        - name: finguard-tls
+          secret:
+            secretName: {{ .Values.tls.secretName }}
+        {{- end }}
+      {{- end }}
+      containers:
+        - name: finguard
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - serve
+            - --bind
+            - "0.0.0.0:{{ .Values.service.grpcPort }}"
+            - --http-bind
+            - "0.0.0.0:{{ .Values.service.httpPort }}"
+          ports:
+            - name: grpc
+              containerPort: {{ .Values.service.grpcPort }}
+            - name: http
+              containerPort: {{ .Values.service.httpPort }}
+          env:
+            - name: FINGUARD_REPLICA_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: FINGUARD_OIDC_ISSUER
+              value: {{ .Values.oidc.issuer | quote }}
+            - name: FINGUARD_OIDC_AUDIENCE
+              value: {{ .Values.oidc.audience | quote }}
+            {{- if .Values.oidc.jwksUrl }}
+            - name: FINGUARD_OIDC_JWKS_URL
+              value: {{ .Values.oidc.jwksUrl | quote }}
+            {{- end }}
+            {{- if .Values.tls.enabled }}
+            - name: FINGUARD_TLS_CERT
+              value: /tls/tls.crt
+            - name: FINGUARD_TLS_KEY
+              value: /tls/tls.key
+            {{- end }}
+            {{- if .Values.adminTokenExistingSecret }}
+            - name: FINGUARD_ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.adminTokenExistingSecret }}
+                  key: token
+            {{- end }}
+            {{- if .Values.postgres.urlExistingSecret }}
+            - name: FINGUARD_POSTGRES_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgres.urlExistingSecret }}
+                  key: url
+            {{- end }}
+          {{- if .Values.tls.enabled }}
+          volumeMounts:
+            - name: finguard-tls
+              mountPath: /tls
+              readOnly: true
+          {{- end }}
+          readinessProbe:
+            tcpSocket:
+              port: grpc
+            initialDelaySeconds: 3
+            periodSeconds: 5
+        {{- if .Values.agentgateway.enabled }}
+        - name: agentgateway
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/usr/local/bin/agentgateway"]
+          args: ["-f", "/etc/finguard/agentgateway.yaml"]
+          ports:
+            - name: gateway
+              containerPort: {{ .Values.service.gatewayPort }}
+          volumeMounts:
+            - name: agentgateway-config
+              mountPath: /etc/finguard
+              readOnly: true
+        {{- end }}

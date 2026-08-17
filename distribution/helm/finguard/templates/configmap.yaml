@@ -1,0 +1,35 @@
+{{- if .Values.agentgateway.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: finguard-agentgateway
+  labels:
+    app: finguard
+data:
+  agentgateway.yaml: |
+    binds:
+      - port: {{ .Values.service.gatewayPort }}
+        listeners:
+          - protocol: HTTP
+            routes:
+              - name: erp-writes-governed
+                matches:
+                  - path:
+                      pathPrefix: {{ .Values.agentgateway.pathPrefix | quote }}
+                policies:
+                  extAuthz:
+                    host: "127.0.0.1:{{ .Values.service.grpcPort }}"
+                    protocol:
+                      grpc: {}
+                    failureMode: deny
+                  extProc:
+                    host: "127.0.0.1:{{ .Values.service.grpcPort }}"
+                    failureMode: failClosed
+                    processingOptions:
+                      requestHeaderMode: send
+                      responseHeaderMode: send
+                      requestBodyMode: buffered
+                      responseBodyMode: buffered
+                backends:
+                  - host: {{ .Values.agentgateway.backendHost | quote }}
+{{- end }}

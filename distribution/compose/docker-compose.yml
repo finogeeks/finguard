@@ -1,0 +1,82 @@
+# Lab Compose for the public pack. Pulls GHCR — no source build.
+#
+#   FINGUARD_IMAGE=ghcr.io/finogeeks/finguard:0.1.0 \
+#   FINGUARD_MOCK_ERP_IMAGE=ghcr.io/finogeeks/finguard-mock-erp:0.1.0 \
+#   docker compose -f distribution/compose/docker-compose.yml --profile greenfield up -d
+#
+# Prefer ./try.sh. This file is a lab: mock ERP + bundled Postgres.
+# Postgres/Vault are not in the product image.
+
+services:
+  mock-erp:
+    image: ${FINGUARD_MOCK_ERP_IMAGE:-ghcr.io/finogeeks/finguard-mock-erp:0.1.0}
+    ports:
+      - "18080:18080"
+    command: ["--bind", "0.0.0.0:18080"]
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/18080'"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: finguard
+      POSTGRES_PASSWORD: finguard
+      POSTGRES_DB: finguard
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U finguard -d finguard"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  finguard:
+    profiles: ["control-plane", "greenfield"]
+    image: ${FINGUARD_IMAGE:-ghcr.io/finogeeks/finguard:0.1.0}
+    environment:
+      FINGUARD_ADMIN_TOKEN: local-compose-token
+      FINGUARD_POSTGRES_URL: postgres://finguard:finguard@postgres:5432/finguard
+      FINGUARD_REPLICA_ID: compose-replica-1
+    ports:
+      - "19090:19090"
+      - "19191:19191"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mock-erp:
+        condition: service_healthy
+    command:
+      [
+        "serve",
+        "--bind", "0.0.0.0:19090",
+        "--http-bind", "0.0.0.0:19191",
+        "--postgres-url", "postgres://finguard:finguard@postgres:5432/finguard",
+        "--verify-base-url", "http://mock-erp:18080",
+        "--admin-token", "local-compose-token",
+        "--replica-id", "compose-replica-1",
+      ]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -fsS -H \"Authorization: Bearer $$FINGUARD_ADMIN_TOKEN\" http://127.0.0.1:19191/metrics >/dev/null",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  agentgateway:
+    profiles: ["greenfield"]
+    image: ${FINGUARD_IMAGE:-ghcr.io/finogeeks/finguard:0.1.0}
+    entrypoint: ["/usr/local/bin/agentgateway"]
+    command: ["-f", "/opt/finguard/distribution/compose/agentgateway.yaml"]
+    ports:
+      - "13000:13000"
+    depends_on:
+      finguard:
+        condition: service_healthy
+      mock-erp:
+        condition: service_healthy

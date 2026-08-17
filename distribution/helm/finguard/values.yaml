@@ -1,0 +1,35 @@
+replicaCount: 2
+
+image:
+  repository: ghcr.io/finogeeks/finguard
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+
+service:
+  grpcPort: 19090
+  httpPort: 8088
+  gatewayPort: 13000
+
+tls:
+  enabled: true
+  secretName: finguard-grpc-tls
+
+oidc:
+  issuer: ""
+  audience: finguard
+  # RS256 JWKS URL → FINGUARD_OIDC_JWKS_URL. Empty = stub identity.
+  # Production IdP proof stays inbox until a live partner JWKS is signed off.
+  jwksUrl: ""
+
+adminTokenExistingSecret: ""
+
+postgres:
+  urlExistingSecret: ""
+
+# Same image as FinGuard. Sidecar shares the pod network (127.0.0.1).
+# Set enabled: false for existing-gateway (customer Envoy/APISIX).
+# Postgres is not in this chart — point postgres.urlExistingSecret at theirs.
+agentgateway:
+  enabled: true
+  backendHost: "erp.example.svc:80"
+  pathPrefix: /writes
