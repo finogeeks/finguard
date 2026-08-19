@@ -112,12 +112,14 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' \
 | 你看到了 | **没有** 证明 |
 | --- | --- |
 | 桩调用方身份 | 你们的 IdP JWKS / RS256 / 令牌交换 |
+| `try.sh` 里没有 Vault | 对着你们 Vault/OpenBao 做凭证托管 — [vault-custody.zh.md](vault-custody.zh.md) |
 | Mock ERP `/writes` | 真实 CRM/ERP、SOAP、MCP 或 A2A 后端 |
 | 未签名的 `ghcr.io/finogeeks/finguard` | 已签名供应链 / SBOM / GA |
 
 集群路径（你们的 Postgres + IdP + 真实写接口）：
 [install-cluster.zh.md](install-cluster.zh.md)、
-[identity-iam.zh.md](identity-iam.zh.md)，然后
+[identity-iam.zh.md](identity-iam.zh.md)、
+[vault-custody.zh.md](vault-custody.zh.md)，然后
 [customer-deploy.zh.md](customer-deploy.zh.md)。
 
 ## 排障

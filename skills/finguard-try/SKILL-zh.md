@@ -63,5 +63,7 @@ GHCR 包默认私有。`docker login ghcr.io`，或导入厂商提供的镜像�
 ## 下一步
 
 真实 Postgres + IdP + 真实写路径：技能 `finguard-customer-deploy`、
-https://github.com/finogeeks/finguard/blob/main/docs/install-cluster.zh.md
-与 https://github.com/finogeeks/finguard/blob/main/docs/identity-iam.zh.md
+https://github.com/finogeeks/finguard/blob/main/docs/install-cluster.zh.md、
+https://github.com/finogeeks/finguard/blob/main/docs/identity-iam.zh.md、
+https://github.com/finogeeks/finguard/blob/main/docs/vault-custody.zh.md
+（`try.sh` 不启动 Vault）。

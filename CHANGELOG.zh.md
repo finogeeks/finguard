@@ -8,6 +8,7 @@
 
 - 客户 IAM / IdP 说明：`docs/identity-iam.zh.md`（OIDC JWT + JWKS；中英）。
   自建 IAM（不是 Keycloak/Zitadel）走同一契约或薄签发层。
+- Vault / 凭证托管说明：`docs/vault-custody.zh.md`（KV 注入；Helm 叠加；中英）。
 - GHCR 镜像为 `linux/amd64` 与 `linux/arm64`。
 - Helm 一键：默认启动 Postgres（`postgres.bundled=false` 可改用已有库）。
 - 中文文档索引与本机集成实验手册（`docs/lab.zh.md`、`lab-exercises.sh`）。

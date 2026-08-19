@@ -12,7 +12,9 @@ description: >
 Humans follow https://github.com/finogeeks/finguard/blob/main/docs/customer-deploy.md
 (Chinese: `docs/customer-deploy.zh.md`). IAM / IdP:
 https://github.com/finogeeks/finguard/blob/main/docs/identity-iam.md
-(Chinese: `docs/identity-iam.zh.md`). This skill orchestrates that procedure.
+(Chinese: `docs/identity-iam.zh.md`). Vault / custody:
+https://github.com/finogeeks/finguard/blob/main/docs/vault-custody.md
+(Chinese: `docs/vault-custody.zh.md`). This skill orchestrates that procedure.
 It is not a substitute for handing the customer the markdown.
 
 **Working directory:** public pack root (Helm chart at `distribution/helm/finguard/`).
@@ -35,6 +37,7 @@ It is not a substitute for handing the customer the markdown.
 - [ ] One-shot Helm: backendHost = real write API (chart starts Postgres + admin token)
 - [ ] Image: ghcr.io/finogeeks/finguard:<version> (pin tag or digest)
 - [ ] oidc.issuer + oidc.jwksUrl (customer IdP; not stub/HS256) — docs/identity-iam.md
+- [ ] Vault overlay if custody is in scope — docs/vault-custody.md (`FINGUARD_VAULT_ADDR` + `FINGUARD_INJECT_HEADER`; not env inject)
 - [ ] helm upgrade --install; pods ready
 - [ ] HTTP probes
 - [ ] Fail-closed + exactly-once
@@ -56,7 +59,7 @@ Off-loopback: TLS secret required before install when `tls.enabled=true`.
 Follow `docs/install-cluster.md`. Always `helm template` before apply. Image
 repository `ghcr.io/finogeeks/finguard`. Wire company IAM per
 `docs/identity-iam.md` (`oidc.issuer` / `oidc.audience` / `oidc.jwksUrl`).
-Chart does not template Vault inject flags.
+Vault custody: `docs/vault-custody.md`. Chart does not template Vault inject flags.
 
 ### 3. Validate
 

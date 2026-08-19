@@ -23,5 +23,10 @@ identity. That is not a customer pass. In-house IAM uses the same three values
 [`docs/identity-iam.md`](../../../docs/identity-iam.md)
 (Chinese: [`docs/identity-iam.zh.md`](../../../docs/identity-iam.zh.md)).
 
+Vault / OpenBao custody is an env overlay (`FINGUARD_VAULT_ADDR`, token, path,
+`FINGUARD_INJECT_HEADER`). The chart does not template it. Procedure:
+[`docs/vault-custody.md`](../../../docs/vault-custody.md)
+(Chinese: [`docs/vault-custody.zh.md`](../../../docs/vault-custody.zh.md)).
+
 Customer procedure: [`docs/customer-deploy.md`](../../../docs/customer-deploy.md)
 (Chinese: [`docs/customer-deploy.zh.md`](../../../docs/customer-deploy.zh.md)).

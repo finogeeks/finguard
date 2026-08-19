@@ -31,6 +31,7 @@ These are not required to get it running:
 | --- | --- |
 | You already run Postgres | `--set postgres.bundled=false --set postgres.urlExistingSecret=…` (Secret key `url`) |
 | Company login (IdP) | `--set oidc.issuer=… --set oidc.audience=… --set oidc.jwksUrl=…` — stub identity is not a customer pass. In-house IAM: same three values (or RSA PEM / a broker), not a vendor plugin. Procedure: [identity-iam.md](identity-iam.md) |
+| Vault / OpenBao custody | Overlay env (`FINGUARD_VAULT_ADDR`, token, path, `FINGUARD_INJECT_HEADER`). Chart does not template Vault. Procedure: [vault-custody.md](vault-custody.md) |
 | You already have Envoy / APISIX / Kong | `--set agentgateway.enabled=false` and TLS on the FinGuard gRPC port |
 | Off-loopback TLS | `--set tls.enabled=true` and create `tls.secretName` **before** install |
 
@@ -44,4 +45,5 @@ Do not point `agentgateway.backendHost` at mock ERP.
 4. Same `Idempotency-Key` twice → upstream write count stays **1**
 
 Company IAM / OIDC JWKS: [identity-iam.md](identity-iam.md).
+Vault / custody: [vault-custody.md](vault-custody.md).
 First protected write: [customer-deploy.md](customer-deploy.md).

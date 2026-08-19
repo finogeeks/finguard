@@ -15,3 +15,4 @@ Further reading (absolute URLs only inside skill bodies if you add more later):
 - https://github.com/finogeeks/finguard
 - https://github.com/finogeeks/finguard/blob/main/docs/getting-started.md
 - https://github.com/finogeeks/finguard/blob/main/docs/identity-iam.md
+- https://github.com/finogeeks/finguard/blob/main/docs/vault-custody.md

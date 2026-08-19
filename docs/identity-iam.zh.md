@@ -13,7 +13,8 @@ Okta、Microsoft Entra ID、Keycloak、Zitadel、Auth0 或本地 IAM，也不提
 不能证明你们的 IdP。
 
 相关：[install-cluster.zh.md](install-cluster.zh.md)、
-[customer-deploy.zh.md](customer-deploy.zh.md)。
+[customer-deploy.zh.md](customer-deploy.zh.md)、
+[vault-custody.zh.md](vault-custody.zh.md)。
 
 ---
 

@@ -14,7 +14,8 @@ thin token broker if the directory cannot mint that contract. See §3.
 **Status:** unsigned image, no SBOM. Do not claim GA. The laptop lab (`try.sh`)
 uses **stub identity** and does not prove your IdP.
 
-Related: [install-cluster.md](install-cluster.md), [customer-deploy.md](customer-deploy.md).
+Related: [install-cluster.md](install-cluster.md), [customer-deploy.md](customer-deploy.md),
+[vault-custody.md](vault-custody.md).
 
 ---
 

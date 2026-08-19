@@ -74,7 +74,8 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' http://127.0.0.1:19191/
 
 把真实智能体指到真实写接口走集群路径：
 [install-cluster.zh.md](install-cluster.zh.md)，然后接 IdP
-（[identity-iam.zh.md](identity-iam.zh.md)），再
+（[identity-iam.zh.md](identity-iam.zh.md)），可选 Vault 托管
+（[vault-custody.zh.md](vault-custody.zh.md)），再
 [customer-deploy.zh.md](customer-deploy.zh.md)。
 
 不要把 mock ERP 留在客户集群。不要把本实验当作 IdP 证明。

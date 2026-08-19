@@ -10,6 +10,7 @@
 | [lab.zh.md](lab.zh.md) | 实验起来之后：流水、故障关闭、接入智能体 |
 | [install-cluster.zh.md](install-cluster.zh.md) | 集群 Helm（你们的 Postgres + IdP） |
 | [identity-iam.zh.md](identity-iam.zh.md) | 接入你们的 IAM / IdP（OIDC JWT + JWKS；与厂商无关） |
+| [vault-custody.zh.md](vault-custody.zh.md) | 接入 Vault / OpenBao（放行时注入凭证） |
 | [customer-deploy.zh.md](customer-deploy.zh.md) | 保护第一条写 / 切流 |
 
 给 AI 运维的技能：[../skills/README.zh.md](../skills/README.zh.md)。

@@ -11,6 +11,7 @@ and have no SBOM.
 | [lab.md](lab.md) | After the lab is up: journal, fail-closed, point an agent |
 | [install-cluster.md](install-cluster.md) | Helm on your cluster (your Postgres + IdP) |
 | [identity-iam.md](identity-iam.md) | Connect your IAM / IdP (OIDC JWT + JWKS; vendor-agnostic) |
+| [vault-custody.md](vault-custody.md) | Connect Vault / OpenBao (credential inject on allow) |
 | [customer-deploy.md](customer-deploy.md) | First protected write / cutover |
 
 Skills for AI operators: [../skills/README.md](../skills/README.md).

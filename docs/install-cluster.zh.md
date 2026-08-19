@@ -28,6 +28,7 @@ kubectl get secret finguard-admin -o jsonpath='{.data.token}' | base64 -d; echo
 | --- | --- |
 | 已有 Postgres | `--set postgres.bundled=false --set postgres.urlExistingSecret=…`（Secret 的 key 为 `url`） |
 | 公司登录（IdP） | `--set oidc.issuer=… --set oidc.audience=… --set oidc.jwksUrl=…` —— 桩身份不是客户验收通过。自建 IAM：同一组三个值（或 RSA PEM / 签发层），不是厂商插件。步骤：[identity-iam.zh.md](identity-iam.zh.md) |
+| Vault / OpenBao 托管 | 叠加环境变量（`FINGUARD_VAULT_ADDR`、token、path、`FINGUARD_INJECT_HEADER`）。图表不模板化 Vault。步骤：[vault-custody.zh.md](vault-custody.zh.md) |
 | 已有 Envoy / APISIX / Kong | `--set agentgateway.enabled=false`，并给 FinGuard gRPC 开 TLS |
 | 非回环 TLS | `--set tls.enabled=true`，安装 **之前** 创建 `tls.secretName` |
 
@@ -41,4 +42,5 @@ kubectl get secret finguard-admin -o jsonpath='{.data.token}' | base64 -d; echo
 4. 同一 `Idempotency-Key` 两次 → 上游写入次数仍为 **1**
 
 公司 IAM / OIDC JWKS：[identity-iam.zh.md](identity-iam.zh.md)。
+Vault / 凭证托管：[vault-custody.zh.md](vault-custody.zh.md)。
 保护第一条写：[customer-deploy.zh.md](customer-deploy.zh.md)。

@@ -18,5 +18,9 @@ helm upgrade --install finguard distribution/helm/finguard \
 [接入 IAM](../../../docs/identity-iam.zh.md)
 （英文：[identity-iam.md](../../../docs/identity-iam.md)）。
 
+Vault / OpenBao 托管用环境变量叠加（`FINGUARD_VAULT_ADDR`、token、path、`FINGUARD_INJECT_HEADER`）。图表不模板化。步骤：
+[接入 Vault](../../../docs/vault-custody.zh.md)
+（英文：[vault-custody.md](../../../docs/vault-custody.md)）。
+
 客户步骤：[客户部署说明](../../../docs/customer-deploy.zh.md)
 （英文：[customer-deploy.md](../../../docs/customer-deploy.md)）。

@@ -23,6 +23,9 @@ oidc:
   # Customer procedure: docs/identity-iam.md (issuer + audience + JWKS; not HS256).
   jwksUrl: ""
 
+# Vault / OpenBao custody is not templated. Overlay FINGUARD_VAULT_* and
+# FINGUARD_INJECT_HEADER. Procedure: docs/vault-custody.md.
+
 # Empty = chart creates Secret finguard-admin.
 adminTokenExistingSecret: ""
 

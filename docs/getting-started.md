@@ -77,6 +77,7 @@ Workbook: [lab.md](lab.md) (中文：[lab.zh.md](lab.zh.md)). Point an HTTP agen
 
 Pointing a real agent at a real write API is the cluster path:
 [install-cluster.md](install-cluster.md), then your IdP ([identity-iam.md](identity-iam.md)),
+optional Vault custody ([vault-custody.md](vault-custody.md)),
 then [customer-deploy.md](customer-deploy.md).
 
 Do not keep the mock ERP in a customer cluster. Do not treat this lab as IdP proof.
