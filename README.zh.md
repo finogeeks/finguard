@@ -43,6 +43,7 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 - [快速开始](docs/getting-started.zh.md) — 本机实验
 - [本机集成检查](docs/lab.zh.md) — `try.sh` 之后
 - [集群安装](docs/install-cluster.zh.md) — Helm
+- [接入你们的 IAM](docs/identity-iam.zh.md) — OIDC JWT + JWKS
 - [保护第一个存量服务](docs/customer-deploy.zh.md) — 切流
 
 ## 运维技能（给 AI Agent）

@@ -116,7 +116,8 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' \
 | 未签名的 `ghcr.io/finogeeks/finguard` | 已签名供应链 / SBOM / GA |
 
 集群路径（你们的 Postgres + IdP + 真实写接口）：
-[install-cluster.zh.md](install-cluster.zh.md)，然后
+[install-cluster.zh.md](install-cluster.zh.md)、
+[identity-iam.zh.md](identity-iam.zh.md)，然后
 [customer-deploy.zh.md](customer-deploy.zh.md)。
 
 ## 排障

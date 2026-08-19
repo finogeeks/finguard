@@ -14,7 +14,9 @@ helm upgrade --install finguard distribution/helm/finguard \
 
 本图表 **不** 附带已签名镜像或 SBOM。默认镜像是 `ghcr.io/finogeeks/finguard`（`linux/amd64` 与 `linux/arm64`）。钉死 `image.tag`。本机实验：https://github.com/finogeeks/finguard（仓库根目录 `try.sh`）。
 
-线上 OIDC：`oidc.issuer`、`oidc.audience`、`oidc.jwksUrl`。JWKS 为空即桩身份，不是客户验收通过。GA go 仍为否。
+线上 OIDC：`oidc.issuer`、`oidc.audience`、`oidc.jwksUrl`。JWKS 为空即桩身份，不是客户验收通过。自建 IAM 用同一组三个值（或 RSA PEM / 签发层）—— 没有厂商插件。GA go 仍为否。步骤：
+[接入 IAM](../../../docs/identity-iam.zh.md)
+（英文：[identity-iam.md](../../../docs/identity-iam.md)）。
 
 客户步骤：[客户部署说明](../../../docs/customer-deploy.zh.md)
 （英文：[customer-deploy.md](../../../docs/customer-deploy.md)）。

@@ -4,6 +4,8 @@
 
 For customer IT or an on-site engineer. Lab first: [getting-started.md](getting-started.md)
 then [lab.md](lab.md). Cluster install is one Helm command (chart starts Postgres): [install-cluster.md](install-cluster.md).
+Company IAM / IdP (OIDC JWT + JWKS): [identity-iam.md](identity-iam.md).
+In-house directories use the same JWT contract or a broker, not a vendor plugin.
 
 **Status:** unsigned image, no SBOM. Do not claim GA, 信创 directory listing, or 密评.
 
@@ -16,7 +18,8 @@ then [lab.md](lab.md). Cluster install is one Helm command (chart starts Postgre
 
 Envoy-family calls FinGuard gRPC (`:19090`) with `ext_authz` + `ext_proc`,
 `failureMode: deny` / `failClosed`. Other edges: `POST /v1/decide` with
-`{"method","path","body"}` and the caller JWT.
+`{"method","path","body"}`, admin Bearer, and `x-finguard-id-token`. Caller JWT
+rules: [identity-iam.md](identity-iam.md).
 
 ## Validate before agents
 
@@ -30,7 +33,8 @@ HTTP bind in Helm is `:8088` (Compose lab is `:19191`).
 | 4 | Exactly-once | Same `Idempotency-Key` twice; upstream write count stays **1** |
 | 5 | Identity | Wrong `iss` / `aud` / expired JWT → **401**. `obo_user` journals `act.sub` |
 
-Stub / HS256 identity is not a customer pass.
+Stub / HS256 identity is not a customer pass. Wire issuer + JWKS before this
+row: [identity-iam.md](identity-iam.md).
 
 ## Protect one expensive write
 

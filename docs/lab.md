@@ -120,7 +120,8 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' \
 | Unsigned `ghcr.io/finogeeks/finguard` | Signed supply chain / SBOM / GA |
 
 Cluster path (your Postgres + IdP + real write API):
-[install-cluster.md](install-cluster.md) then [customer-deploy.md](customer-deploy.md).
+[install-cluster.md](install-cluster.md), [identity-iam.md](identity-iam.md),
+then [customer-deploy.md](customer-deploy.md).
 
 ## Troubleshooting
 

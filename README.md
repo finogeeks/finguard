@@ -4,7 +4,8 @@
 [文档索引](docs/README.zh.md) ·
 [快速开始](docs/getting-started.zh.md) ·
 [本机集成实验](docs/lab.zh.md) ·
-[集群安装](docs/install-cluster.zh.md)
+[集群安装](docs/install-cluster.zh.md) ·
+[接入 IAM](docs/identity-iam.zh.md)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
@@ -60,6 +61,7 @@ write API hostname. Chart: [`distribution/helm/finguard/`](distribution/helm/fin
 - [Getting started](docs/getting-started.md) — lab
 - [Laptop integration checks](docs/lab.md) — after `try.sh`
 - [Install on a cluster](docs/install-cluster.md) — Helm
+- [Connect your IAM](docs/identity-iam.md) — OIDC JWT + JWKS
 - [First protected service](docs/customer-deploy.md) — cutover
 
 ## Operator skills (for AI agents)

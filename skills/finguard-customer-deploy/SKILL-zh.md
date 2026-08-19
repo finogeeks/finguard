@@ -10,7 +10,9 @@ description: >
 
 人跟
 https://github.com/finogeeks/finguard/blob/main/docs/customer-deploy.zh.md
-（英文：`docs/customer-deploy.md`）。本技能只编排步骤，不能代替把 markdown 交给客户。
+（英文：`docs/customer-deploy.md`）。IAM / IdP：
+https://github.com/finogeeks/finguard/blob/main/docs/identity-iam.zh.md
+（英文：`docs/identity-iam.md`）。本技能只编排步骤，不能代替把 markdown 交给客户。
 
 **工作目录：** 公开包根目录（Helm 图表在 `distribution/helm/finguard/`）。
 
@@ -29,6 +31,7 @@ https://github.com/finogeeks/finguard/blob/main/docs/customer-deploy.zh.md
 ```
 - [ ] 一键 Helm：backendHost = 真实写接口（图表启动 Postgres 和管理令牌）
 - [ ] 镜像：ghcr.io/finogeeks/finguard:<version>（钉 tag 或 digest）
+- [ ] oidc.issuer + oidc.jwksUrl（客户 IdP；不要桩/HS256）— docs/identity-iam.zh.md
 - [ ] helm upgrade --install；Pod 就绪
 - [ ] HTTP 探测
 - [ ] 故障关闭 + 恰好一次
@@ -48,7 +51,8 @@ https://github.com/finogeeks/finguard/blob/main/docs/customer-deploy.zh.md
 ### 2. 部署
 
 跟 `docs/install-cluster.zh.md`。先 `helm template` 再 apply。镜像仓库
-`ghcr.io/finogeeks/finguard`。图表不模板化 Vault 注入开关。
+`ghcr.io/finogeeks/finguard`。按 `docs/identity-iam.zh.md` 接公司 IAM
+（`oidc.issuer` / `oidc.audience` / `oidc.jwksUrl`）。图表不模板化 Vault 注入开关。
 
 ### 3. 验收
 

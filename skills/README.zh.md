@@ -13,3 +13,4 @@
 
 - https://github.com/finogeeks/finguard
 - https://github.com/finogeeks/finguard/blob/main/docs/getting-started.zh.md
+- https://github.com/finogeeks/finguard/blob/main/docs/identity-iam.zh.md

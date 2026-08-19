@@ -10,6 +10,7 @@ and have no SBOM.
 | [getting-started.md](getting-started.md) | Bring up the laptop lab (`try.sh`) |
 | [lab.md](lab.md) | After the lab is up: journal, fail-closed, point an agent |
 | [install-cluster.md](install-cluster.md) | Helm on your cluster (your Postgres + IdP) |
+| [identity-iam.md](identity-iam.md) | Connect your IAM / IdP (OIDC JWT + JWKS; vendor-agnostic) |
 | [customer-deploy.md](customer-deploy.md) | First protected write / cutover |
 
 Skills for AI operators: [../skills/README.md](../skills/README.md).

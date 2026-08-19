@@ -30,7 +30,7 @@ These are not required to get it running:
 | When | What |
 | --- | --- |
 | You already run Postgres | `--set postgres.bundled=false --set postgres.urlExistingSecret=…` (Secret key `url`) |
-| Company login (IdP) | `--set oidc.issuer=… --set oidc.jwksUrl=…` — stub identity is not a customer pass |
+| Company login (IdP) | `--set oidc.issuer=… --set oidc.audience=… --set oidc.jwksUrl=…` — stub identity is not a customer pass. In-house IAM: same three values (or RSA PEM / a broker), not a vendor plugin. Procedure: [identity-iam.md](identity-iam.md) |
 | You already have Envoy / APISIX / Kong | `--set agentgateway.enabled=false` and TLS on the FinGuard gRPC port |
 | Off-loopback TLS | `--set tls.enabled=true` and create `tls.secretName` **before** install |
 
@@ -43,4 +43,5 @@ Do not point `agentgateway.backendHost` at mock ERP.
 3. Scale FinGuard to 0; a write through the gateway must **not** reach the backend
 4. Same `Idempotency-Key` twice → upstream write count stays **1**
 
-Next: [customer-deploy.md](customer-deploy.md).
+Company IAM / OIDC JWKS: [identity-iam.md](identity-iam.md).
+First protected write: [customer-deploy.md](customer-deploy.md).

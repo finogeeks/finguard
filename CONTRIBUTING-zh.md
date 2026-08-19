@@ -11,4 +11,4 @@
 
 不要向这里发引擎补丁。不要指望从这个仓库 checkout 源码。
 
-每次公开发布会把上游公开包（README、`try.sh`、文档、技能、实验 Compose）以及 Helm 图表 rsync 到 `main`。
+每次公开发布会把上游公开包（README、`try.sh`、文档、技能、实验 Compose）以及 Helm 图表 rsync 到 `main`。维护者也可以只同步文档、不发布新的 GHCR 镜像。

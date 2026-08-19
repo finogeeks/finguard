@@ -14,4 +14,5 @@ Do not send engine patches here. Do not expect a source checkout from this
 repository.
 
 Each public release rsyncs the upstream public pack (README, `try.sh`, docs,
-skills, lab Compose) plus the Helm chart onto `main`.
+skills, lab Compose) plus the Helm chart onto `main`. Maintainers can also
+sync docs without publishing a new GHCR image.

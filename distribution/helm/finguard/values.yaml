@@ -20,6 +20,7 @@ oidc:
   issuer: ""
   audience: finguard
   # RS256 JWKS URL → FINGUARD_OIDC_JWKS_URL. Empty = stub identity (lab / first start).
+  # Customer procedure: docs/identity-iam.md (issuer + audience + JWKS; not HS256).
   jwksUrl: ""
 
 # Empty = chart creates Secret finguard-admin.

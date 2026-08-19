@@ -4,6 +4,8 @@ English: [customer-deploy.md](customer-deploy.md)
 
 给客户信息化或现场工程师。先做实验：[getting-started.zh.md](getting-started.zh.md)，然后
 [lab.zh.md](lab.zh.md)。集群安装是一条 Helm 命令（图表会启动 Postgres）：[install-cluster.zh.md](install-cluster.zh.md)。
+公司 IAM / IdP（OIDC JWT + JWKS）：[identity-iam.zh.md](identity-iam.zh.md)。
+自建目录用同一套 JWT 契约或签发层，不是厂商插件。
 
 **状态：** 镜像未签名、无 SBOM。不要宣称 GA、已进信创目录或已获密评。
 
@@ -16,7 +18,8 @@ English: [customer-deploy.md](customer-deploy.md)
 
 Envoy 族打 FinGuard gRPC（`:19090`）的 `ext_authz` + `ext_proc`，
 `failureMode: deny` / `failClosed`。其他边缘：`POST /v1/decide`，体为
-`{"method","path","body"}`，并带调用方 JWT。
+`{"method","path","body"}`，带管理 Bearer 和 `x-finguard-id-token`。调用方 JWT
+规则：[identity-iam.zh.md](identity-iam.zh.md)。
 
 ## 智能体接入前验收
 
@@ -30,7 +33,8 @@ Helm HTTP 绑定 `:8088`（Compose 实验是 `:19191`）。
 | 4 | 恰好一次 | 同一 `Idempotency-Key` 两次；上游写入次数仍为 **1** |
 | 5 | 身份 | 错误 `iss` / `aud` / 过期 JWT → **401**。`obo_user` 流水记 `act.sub` |
 
-桩身份 / HS256 **不是** 客户验收通过。
+桩身份 / HS256 **不是** 客户验收通过。做本行前先接 issuer + JWKS：
+[identity-iam.zh.md](identity-iam.zh.md)。
 
 ## 保护一条昂贵的写
 

@@ -66,5 +66,6 @@ and set `FINGUARD_SKIP_PULL=1`. Images are `linux/amd64` and `linux/arm64`.
 
 ## Next
 
-Real Postgres + IdP + real write path: skill `finguard-customer-deploy` and
+Real Postgres + IdP + real write path: skill `finguard-customer-deploy`,
 https://github.com/finogeeks/finguard/blob/main/docs/install-cluster.md
+and https://github.com/finogeeks/finguard/blob/main/docs/identity-iam.md
