@@ -13,8 +13,10 @@ description: >
 
 ## Hard rules
 
-1. This lab is mock ERP + stub identity + unsigned image. Do not call it production
-   IdP proof, design-partner ERP proof, GA, 信创, or 密评.
+1. This lab is mock ERP + stub identity. It pulls by **tag**; old `0.1.0` tags
+   may be unsigned. Do not call it production IdP proof, design-partner ERP
+   proof, GA, 信创, or 密评. Cluster installs pin the digest in
+   `docs/supply-chain.md`.
 2. Do not `docker build` from engine source. Pull (or skip-pull) GHCR tags.
 3. Do not point a customer cluster at mock ERP.
 4. Do not enable `FINGUARD_MCP_REPLAY=patched` unless the user accepted a pin-time

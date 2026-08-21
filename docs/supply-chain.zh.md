@@ -6,13 +6,18 @@ English: [supply-chain.md](supply-chain.md)
 `ghcr.io/finogeeks/finguard:<version>`，并 **附带 SPDX SBOM 证明**。该流水线
 出现之前的实验标签是未签名的——旧标签上 `cosign verify` 失败是预期行为。
 
-公钥在本仓库：首次密钥仪式之后的 [`cosign.pub`](../cosign.pub)。若该文件不存在，
-说明还没有切过签名发布。不要把 GHCR 当作供应链证明。
+公钥在本仓库：[`cosign.pub`](../cosign.pub)。
+
+当前已签名的 `0.1.0` digest（2026-08-21）：
+
+`sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5`
+
+此 digest 之前的同名标签未签名。更新说明：[CHANGELOG.zh.md](../CHANGELOG.zh.md)。不要宣称 GA。
 
 ## 校验（客户 / 现场工程师）
 
 ```bash
-IMG=ghcr.io/finogeeks/finguard@sha256:REPLACE
+IMG=ghcr.io/finogeeks/finguard@sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5
 
 curl -fsSL -o cosign.pub \
   https://raw.githubusercontent.com/finogeeks/finguard/main/cosign.pub

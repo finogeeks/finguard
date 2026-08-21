@@ -8,7 +8,7 @@
 #   ./try.sh
 #   ./try.sh --down
 #
-# This is a lab. Mock ERP + bundled Postgres + unsigned image.
+# This is a lab. Mock ERP + bundled Postgres. Pulls by tag; pin digest for cluster.
 # It does not prove a customer IdP or a real ERP.
 set -eu
 
@@ -167,7 +167,7 @@ if [ "$ACTION" = "down" ]; then
 fi
 
 cat >&2 <<EOF
-FinGuard lab — one stack (unsigned image, no SBOM).
+FinGuard lab — one stack (tag pull; pin digest for cluster).
   FinGuard + agentgateway + Postgres (Compose). Mock ERP is lab-only.
   pack:     ${PACK_DIR}
   product:  ${PRODUCT_IMAGE}

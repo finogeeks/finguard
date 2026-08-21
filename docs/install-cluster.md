@@ -5,9 +5,9 @@
 **One Helm command starts the product:** FinGuard, agentgateway, and Postgres.
 You do not install those three yourself. Same image as `try.sh`.
 
-**Status:** pin `image.tag` and, after a signed release, `image.digest`.
-Verify: [supply-chain.md](supply-chain.md). Tags from before the signing pipeline
-remain unsigned.
+**Status:** pin `image.tag` **and** `image.digest` for the signed cut. Verify:
+[supply-chain.md](supply-chain.md). Same-name tags from before that digest are
+unsigned. Do not claim GA.
 
 You need a Kubernetes cluster, Helm, and the hostname of **one real write API**
 (ERP/CRM). Point agents at the FinGuard Service on port 13000 — not at that API.
@@ -15,6 +15,7 @@ You need a Kubernetes cluster, Helm, and the hostname of **one real write API**
 ```bash
 helm upgrade --install finguard distribution/helm/finguard \
   --set image.tag=0.1.0 \
+  --set image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5 \
   --set agentgateway.backendHost='erp.example.svc:80'
 ```
 

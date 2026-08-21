@@ -118,7 +118,7 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' \
 | Stub caller identity | Your IdP JWKS / RS256 / token exchange |
 | No Vault in `try.sh` | Credential custody against your Vault/OpenBao — [vault-custody.md](vault-custody.md) |
 | Mock ERP `/writes` | A real CRM/ERP, SOAP, MCP, or A2A backend |
-| Unsigned `ghcr.io/finogeeks/finguard` | Signed supply chain / SBOM / GA |
+| `try.sh` by tag (old `0.1.0` tags may be unsigned) | Pinned digest + `cosign verify` / GA |
 
 Cluster path (your Postgres + IdP + real write API):
 [install-cluster.md](install-cluster.md), [identity-iam.md](identity-iam.md),

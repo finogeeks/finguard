@@ -8,7 +8,7 @@ English: [customer-deploy.md](customer-deploy.md)
 自建目录用同一套 JWT 契约或签发层，不是厂商插件。
 Vault / 凭证托管（放行时注入 ERP 密钥）：[vault-custody.zh.md](vault-custody.zh.md)。
 
-**状态：** 签名发布后钉 digest，并按 [supply-chain.zh.md](supply-chain.zh.md) 校验。不要宣称 GA、已进信创目录或已获密评。
+**状态：** 本次签名切流钉 `image.digest`，并按 [supply-chain.zh.md](supply-chain.zh.md) 校验。不要宣称 GA、已进信创目录或已获密评。
 
 ## 拓扑（短）
 
@@ -67,5 +67,5 @@ curl -fsS -H "Authorization: Bearer $FINGUARD_ADMIN_TOKEN" \
 ## 不要宣称
 
 - 本机 `try.sh` 通过 = 生产 IdP 或设计伙伴 ERP
-- 未签名的 `ghcr.io/finogeeks/finguard` = 已签名供应链
+- 未钉 digest 的漂浮 `:0.1.0` 标签 = 已签名供应链
 - 本流程 = GA go

@@ -8,7 +8,8 @@ Company IAM / IdP (OIDC JWT + JWKS): [identity-iam.md](identity-iam.md).
 In-house directories use the same JWT contract or a broker, not a vendor plugin.
 Vault / custody (inject ERP secret on allow): [vault-custody.md](vault-custody.md).
 
-**Status:** pin digest after a signed release; verify [supply-chain.md](supply-chain.md). Do not claim GA, 信创 directory listing, or 密评.
+**Status:** pin `image.digest` for the signed cut and verify
+[supply-chain.md](supply-chain.md). Do not claim GA, 信创 directory listing, or 密评.
 
 ## Topology (short)
 
@@ -71,5 +72,5 @@ runtime you do not control.
 ## What not to claim
 
 - Laptop `try.sh` PASS = production IdP or design-partner ERP
-- Unsigned `ghcr.io/finogeeks/finguard` = signed supply chain
+- Floating `:0.1.0` without a digest pin = signed supply chain
 - This procedure = GA go

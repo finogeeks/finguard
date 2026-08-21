@@ -23,7 +23,7 @@ It is not a substitute for handing the customer the markdown.
 
 1. Do not claim GA, 信创 directory, or 密评. Claim a **signed image** only after
    `cosign verify --key cosign.pub` succeeds for the digest you pulled
-   (`docs/supply-chain.md`). Unsigned tags still exist.
+   (`docs/supply-chain.md`). Same-name tags from before the signed digest still exist.
 2. Do not treat `./try.sh` as production IdP or design-partner ERP proof.
 3. Do not point `agentgateway.backendHost` at mock-erp.
 4. Do not set `FINGUARD_MCP_REPLAY=patched` unless the customer accepted the
@@ -77,7 +77,7 @@ One expensive **write**. Manifest `protocol.path` must match the live path.
 
 Short deployment record: topology, image tag/digest, issuer/JWKS URL (no secrets),
 first `action_id`+path, which validation rows passed/failed, named blockers
-(IdP, TLS, unsigned image, MCP gated).
+(IdP, TLS, digest pin, MCP gated).
 
 Speak Chinese if the operator is using the ZH docs; keep flags, JSON keys, and
 paths in English.

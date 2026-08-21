@@ -10,7 +10,8 @@ or your 密管, and it does not ship a Vault server in the product image.
 There is **no vendor Vault plugin**. HashiCorp, OpenBao, and experimental
 RustyVault work because they speak a KV HTTP API FinGuard already calls.
 
-**Status:** unsigned image, no SBOM. Do not claim GA. The laptop lab (`try.sh`)
+**Status:** signed `0.1.0` image — pin digest and verify
+[supply-chain.md](supply-chain.md). Do not claim GA. The laptop lab (`try.sh`)
 does **not** start Vault and does not prove custody.
 
 Related: [install-cluster.md](install-cluster.md), [customer-deploy.md](customer-deploy.md),
@@ -127,5 +128,5 @@ Stub identity and custody are independent. Wire the IdP too:
 - Laptop `try.sh` PASS = Vault custody is proven
 - Overlaying Vault env = GA, **not 信创**, not 密评
 - Compose Vault or experimental RustyVault = 密评 or 信创 directory listing
-- Unsigned `ghcr.io/finogeeks/finguard` = signed supply chain
+- Floating `:0.1.0` without a digest pin = signed supply chain
 - Env-var inject (`FINGUARD_INJECT_FROM_ENV`) = a customer Vault pass

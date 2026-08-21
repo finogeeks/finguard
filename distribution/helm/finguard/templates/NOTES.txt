@@ -1,4 +1,4 @@
-FinGuard is up (unsigned image, no SBOM).
+FinGuard is up. Pin `image.digest` and verify docs/supply-chain.md. Do not claim GA.
 
   Gateway (agents):  Service finguard port {{ .Values.service.gatewayPort }}
   FinGuard HTTP:     Service finguard port {{ .Values.service.httpPort }}

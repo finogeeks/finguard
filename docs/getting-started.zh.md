@@ -3,7 +3,8 @@
 English: [getting-started.md](getting-started.md)
 
 在工作站上几分钟拉起 FinGuard。**一条命令** 拉起产品栈：FinGuard + 钉死的
-agentgateway + Postgres。mock ERP 和桩身份只给实验。未签名镜像。
+agentgateway + Postgres。mock ERP 和桩身份只给实验。本机按 tag 拉取；集群钉 digest
+（[supply-chain.zh.md](supply-chain.zh.md)）。
 
 ## 1. 前提
 

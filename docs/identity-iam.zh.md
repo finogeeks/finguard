@@ -9,7 +9,8 @@ Okta、Microsoft Entra ID、Keycloak、Zitadel、Auth0 或本地 IAM，也不提
 签发下文的 RS256 JWT + JWKS 契约。自建 IAM、CAS、4A 或区域 IdP 用同一条路径；
 目录签不出该契约时，在前面加一层薄 JWT 签发服务。见第 3 节。
 
-**状态：** 镜像未签名、无 SBOM。不要宣称 GA。本机实验（`try.sh`）用 **桩身份**，
+**状态：** 已签名 `0.1.0` 镜像 — 钉 digest 并按
+[supply-chain.zh.md](supply-chain.zh.md) 校验。不要宣称 GA。本机实验（`try.sh`）用 **桩身份**，
 不能证明你们的 IdP。
 
 相关：[install-cluster.zh.md](install-cluster.zh.md)、
@@ -54,6 +55,8 @@ x-finguard-id-token: <caller-jwt>
 | `sub` | 工作负载 / 客户端主体；记为调用方 |
 | `exp` | 必填。时钟宽限为 **0** —— 过期即拒 |
 | `act.sub` | Action Manifest 为 `auth.mode: obo_user` 时必填（RFC 8693 的 `act` 声明）。这是 **自然人**。只有令牌 `sub` 不够 |
+| `env` | 连接器或 Action Manifest 标明环境（如 `production`）时必填。缺省或不匹配是 `environment_mismatch`，不是跳过。OIDC 开启时忽略伪造的 `x-finguard-environment` |
+| `admin_role` | 可选。`System` / `Security` / `Audit`（三员）。只取已校验 JWT。忽略伪造的 `x-finguard-admin-role`。熔断声明 / 列表 / 解除需要 `Security` |
 
 JWKS 须是标准 `{"keys":[…]}`，且至少有一把 `kty: RSA`。FinGuard 从 Pod 用
 HTTP(S) 拉取。
@@ -108,6 +111,7 @@ HTTP(S) 拉取。
 ```bash
 helm upgrade --install finguard distribution/helm/finguard \
   --set image.tag=0.1.0 \
+  --set image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5 \
   --set agentgateway.backendHost='erp.example.svc:80' \
   --set oidc.issuer='https://idp.example.com/realms/prod' \
   --set oidc.audience=finguard \
@@ -204,5 +208,5 @@ curl -s -o /tmp/oidc-iss.json -w '%{http_code}' \
 
 - 本机 `try.sh` 通过 = 已证明你们的 IdP
 - 设置了 Helm `oidc.*` = GA、信创或密评
-- 未签名的 `ghcr.io/finogeeks/finguard` = 已签名供应链
+- 未钉 digest 的漂浮 `:0.1.0` 标签 = 已签名供应链
 - 本产品内置了 Keycloak、Zitadel 或其他厂商连接器

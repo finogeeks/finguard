@@ -8,15 +8,20 @@ from the public pack workflow **sign** `ghcr.io/finogeeks/finguard:<version>`
 pipeline existed are unsigned — `cosign verify` failing on an old tag is
 expected.
 
-The public key lives in this repository: [`cosign.pub`](../cosign.pub) at the
-pack root after the first key ceremony. If that file is missing, no signed
-release has been cut yet. Do not treat GHCR as a supply-chain claim.
+The public key lives in this repository: [`cosign.pub`](../cosign.pub).
+
+Current signed `0.1.0` digest (2026-08-21):
+
+`sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5`
+
+Same-name tags from before this digest are unsigned. Changelog:
+[CHANGELOG.md](../CHANGELOG.md). Do not claim GA.
 
 ## Verify (customer / SE)
 
 ```bash
 # Prefer digest over tag. Helm: --set image.digest=sha256:…
-IMG=ghcr.io/finogeeks/finguard@sha256:REPLACE
+IMG=ghcr.io/finogeeks/finguard@sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5
 
 curl -fsSL -o cosign.pub \
   https://raw.githubusercontent.com/finogeeks/finguard/main/cosign.pub

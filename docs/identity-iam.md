@@ -11,7 +11,8 @@ work only because they mint the RS256 JWT + JWKS contract below. An in-house
 IAM, CAS, 4A platform, or regional IdP is supported the same way — or via a
 thin token broker if the directory cannot mint that contract. See §3.
 
-**Status:** unsigned image, no SBOM. Do not claim GA. The laptop lab (`try.sh`)
+**Status:** signed `0.1.0` image — pin digest and verify
+[supply-chain.md](supply-chain.md). Do not claim GA. The laptop lab (`try.sh`)
 uses **stub identity** and does not prove your IdP.
 
 Related: [install-cluster.md](install-cluster.md), [customer-deploy.md](customer-deploy.md),
@@ -57,6 +58,8 @@ reach JWKS).
 | `sub` | Workload / client subject; recorded as caller |
 | `exp` | Required. Clock leeway is **0** — expired tokens are rejected |
 | `act.sub` | Required when the Action Manifest uses `auth.mode: obo_user` (RFC 8693 `act` claim). This is the **human**. Token `sub` alone is not enough |
+| `env` | Required when a connector or Action Manifest declares an environment (for example `production`). A missing or mismatched claim is `environment_mismatch`, not a skip. Spoofed `x-finguard-environment` is ignored when OIDC is on |
+| `admin_role` | Optional. `System` / `Security` / `Audit` (三员). Taken from the verified JWT only. Spoofed `x-finguard-admin-role` is ignored. Halt declare/list/lift require `Security` |
 
 JWKS must be a standard `{"keys":[…]}` document with at least one `kty: RSA`
 key. FinGuard fetches it over HTTP(S) from the pod.
@@ -114,6 +117,7 @@ Set issuer, audience, and JWKS. Empty `jwksUrl` keeps stub identity.
 ```bash
 helm upgrade --install finguard distribution/helm/finguard \
   --set image.tag=0.1.0 \
+  --set image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5 \
   --set agentgateway.backendHost='erp.example.svc:80' \
   --set oidc.issuer='https://idp.example.com/realms/prod' \
   --set oidc.audience=finguard \
@@ -221,5 +225,5 @@ Stub / HS256 identity is not a customer pass. Full cutover matrix:
 
 - Laptop `try.sh` PASS = your IdP is proven
 - Setting Helm `oidc.*` = GA, 信创, or 密评
-- Unsigned `ghcr.io/finogeeks/finguard` = signed supply chain
+- Floating `:0.1.0` without a digest pin = signed supply chain
 - A Keycloak, Zitadel, or other vendor connector ships in this product

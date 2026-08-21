@@ -22,7 +22,7 @@ https://github.com/finogeeks/finguard/blob/main/docs/vault-custody.zh.md
 
 1. 不要宣称 GA、信创目录或密评。只有对所用 digest 执行
    `cosign verify --key cosign.pub` 通过后，才可宣称 **已签名镜像**
-   （`docs/supply-chain.zh.md`）。未签名标签仍然存在。
+   （`docs/supply-chain.zh.md`）。该签名 digest 之前的同名标签仍然存在。
 2. 不要把 `./try.sh` 当作生产 IdP 或设计伙伴 ERP 证明。
 3. 不要把 `agentgateway.backendHost` 指到 mock-erp。
 4. 除非客户接受并披露 pin 时补丁，否则不要设 `FINGUARD_MCP_REPLAY=patched`。
@@ -72,6 +72,6 @@ https://github.com/finogeeks/finguard/blob/main/docs/vault-custody.zh.md
 ## 输出
 
 短部署记录：拓扑、镜像 tag/digest、issuer/JWKS URL（不要密钥）、首个
-`action_id`+路径、哪些验收行通过/失败、具名阻塞（IdP、TLS、未签名镜像、MCP 门控）。
+`action_id`+路径、哪些验收行通过/失败、具名阻塞（IdP、TLS、digest 钉死、MCP 门控）。
 
 操作员在用中文文档时用中文说；标志、JSON 键、路径保持英文。

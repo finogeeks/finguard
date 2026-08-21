@@ -12,7 +12,7 @@ description: >
 
 ## 硬规则
 
-1. 本实验是 mock ERP + 桩身份 + 未签名镜像。不要说成生产 IdP 证明、设计伙伴 ERP 证明、GA、信创或密评。
+1. 本实验是 mock ERP + 桩身份。按 **tag** 拉取；旧 `0.1.0` 标签可能未签名。不要说成生产 IdP 证明、设计伙伴 ERP 证明、GA、信创或密评。集群安装钉 `docs/supply-chain.zh.md` 里的 digest。
 2. 不要从引擎源码 `docker build`。拉取（或 skip-pull）GHCR 标签。
 3. 不要把客户集群指到 mock ERP。
 4. 除非用户接受并披露 pin 时补丁，否则不要打开 `FINGUARD_MCP_REPLAY=patched`。

@@ -9,7 +9,8 @@ OpenBao 或你们的密管，产品镜像里也不带 Vault 服务。
 **没有按厂商编写的 Vault 插件。** HashiCorp、OpenBao 和实验性 RustyVault 能接上，
 是因为它们提供 FinGuard 已调用的 KV HTTP API。
 
-**状态：** 镜像未签名、无 SBOM。不要宣称 GA。本机实验（`try.sh`）**不**启动 Vault，
+**状态：** 已签名 `0.1.0` 镜像 — 钉 digest 并按
+[supply-chain.zh.md](supply-chain.zh.md) 校验。不要宣称 GA。本机实验（`try.sh`）**不**启动 Vault，
 也不能证明托管。
 
 相关：[install-cluster.zh.md](install-cluster.zh.md)、[customer-deploy.zh.md](customer-deploy.zh.md)、
@@ -120,5 +121,5 @@ RustyVault 是 **实验性**（无官方镜像，路径常常是 `secret/erp` �
 - 本机 `try.sh` 通过 = 已证明 Vault 托管
 - 叠加了 Vault 环境变量 = GA、信创或密评
 - Compose Vault 或实验性 RustyVault = 密评或信创目录
-- 未签名的 `ghcr.io/finogeeks/finguard` = 已签名供应链
+- 未钉 digest 的漂浮 `:0.1.0` 标签 = 已签名供应链
 - 环境变量注入（`FINGUARD_INJECT_FROM_ENV`）= 客户 Vault 验收通过

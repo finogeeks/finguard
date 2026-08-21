@@ -4,14 +4,15 @@ English: [install-cluster.md](install-cluster.md)
 
 **一条 Helm 命令拉起产品：** FinGuard、agentgateway、Postgres。这三件不用你自己装。镜像与 `try.sh` 相同。
 
-**状态：** 钉死 `image.tag`；签名发布后同时钉 `image.digest`。
-校验：[supply-chain.zh.md](supply-chain.zh.md)。签名流水线之前的标签仍未签名。
+**状态：** 钉死 `image.tag` **和** `image.digest`（本次签名切流）。
+校验：[supply-chain.zh.md](supply-chain.zh.md)。该 digest 之前的同名标签未签名。不要宣称 GA。
 
 你需要 Kubernetes、Helm，以及 **一条真实写接口**（ERP/CRM）的地址。智能体打 FinGuard Service 的 13000 端口，不要打那条写接口。
 
 ```bash
 helm upgrade --install finguard distribution/helm/finguard \
   --set image.tag=0.1.0 \
+  --set image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5 \
   --set agentgateway.backendHost='erp.example.svc:80'
 ```
 

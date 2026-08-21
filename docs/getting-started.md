@@ -4,7 +4,8 @@
 
 Bring FinGuard up on a workstation in a few minutes. **One command** starts the
 product stack: FinGuard + pinned agentgateway + Postgres. Mock ERP and stub
-identity are lab-only. Unsigned image.
+identity are lab-only. Lab pulls by tag; cluster installs pin a digest
+([supply-chain.md](supply-chain.md)).
 
 ## 1. Prerequisites
 
