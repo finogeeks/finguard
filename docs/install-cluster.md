@@ -48,5 +48,6 @@ Do not point `agentgateway.backendHost` at mock ERP.
 4. Same `Idempotency-Key` twice → upstream write count stays **1**
 
 Company IAM / OIDC JWKS: [identity-iam.md](identity-iam.md).
+Operator console (`/console` on this HTTP port): [operator-console.md](operator-console.md).
 Vault / custody: [vault-custody.md](vault-custody.md).
 First protected write: [customer-deploy.md](customer-deploy.md).

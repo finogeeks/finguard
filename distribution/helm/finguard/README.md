@@ -30,6 +30,10 @@ identity. That is not a customer pass. In-house IAM uses the same three values
 [`docs/identity-iam.md`](../../../docs/identity-iam.md)
 (Chinese: [`docs/identity-iam.zh.md`](../../../docs/identity-iam.zh.md)).
 
+Operator console: `GET /console` on the HTTP port. Paste a caller JWT with
+`admin_role`. Procedure: [`docs/operator-console.md`](../../../docs/operator-console.md)
+(Chinese: [`docs/operator-console.zh.md`](../../../docs/operator-console.zh.md)).
+
 Vault / OpenBao custody is an env overlay (`FINGUARD_VAULT_ADDR`, token, path,
 `FINGUARD_INJECT_HEADER`). The chart does not template it. Procedure:
 [`docs/vault-custody.md`](../../../docs/vault-custody.md)

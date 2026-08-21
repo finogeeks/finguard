@@ -49,6 +49,7 @@ saw **one** mutation.
 | --- | --- |
 | `http://127.0.0.1:13000` | Agent front door (agentgateway) |
 | `http://127.0.0.1:19191` | FinGuard HTTP (`/metrics`, `/v1/*`) |
+| `http://127.0.0.1:19191/console` | Operator console. Views need OIDC JWT `admin_role`; stub lab is 403. [operator-console.md](operator-console.md) |
 | `http://127.0.0.1:18080` | Mock ERP (lab only) |
 
 Admin bearer for lab HTTP: `local-compose-token`.

@@ -6,6 +6,7 @@
 [本机集成实验](docs/lab.zh.md) ·
 [集群安装](docs/install-cluster.zh.md) ·
 [接入 IAM](docs/identity-iam.zh.md) ·
+[运维控制台](docs/operator-console.zh.md) ·
 [接入 Vault](docs/vault-custody.zh.md)
 
 ```bash
@@ -64,6 +65,7 @@ write API hostname. Chart: [`distribution/helm/finguard/`](distribution/helm/fin
 - [Laptop integration checks](docs/lab.md) — after `try.sh`
 - [Install on a cluster](docs/install-cluster.md) — Helm
 - [Connect your IAM](docs/identity-iam.md) — OIDC JWT + JWKS
+- [Operator console](docs/operator-console.md) — `/console`; paste caller JWT with `admin_role`
 - [Connect Vault / custody](docs/vault-custody.md) — inject ERP secret on allow
 - [First protected service](docs/customer-deploy.md) — cutover
 

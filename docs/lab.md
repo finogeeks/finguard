@@ -30,6 +30,7 @@ Then either copy-paste the curls below or run:
 | --- | --- |
 | `http://127.0.0.1:13000` | Agent front door (point agents here, **not** at the ERP) |
 | `http://127.0.0.1:19191` | FinGuard admin HTTP |
+| `http://127.0.0.1:19191/console` | Operator console (HTML). Views need an OIDC JWT with `admin_role` — stub lab returns 403. [operator-console.md](operator-console.md) |
 | `http://127.0.0.1:18080` | Mock ERP (lab only; agents must not use this URL) |
 
 Admin bearer: `local-compose-token`.

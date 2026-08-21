@@ -2,6 +2,14 @@
 
 Public-facing notes for `finogeeks/finguard`. Do not claim GA, 信创, or 密评.
 
+## [Unreleased]
+
+- Operator console how-to: `docs/operator-console.md` (EN+zh). Open `/console` on
+  the HTTP bind (lab `:19191`, Helm `:8088`). Views need a caller JWT with
+  `admin_role`. Stub `try.sh` identity returns 403 — expected. The page in this
+  tree no longer sends `x-finguard-admin-role`. The already-signed `0.1.0` digest
+  still has older field labels; paste the JWT in the token field either way.
+
 ## [0.1.0] - 2026-08-21
 
 Signed product image (verify [supply-chain.md](docs/supply-chain.md)):

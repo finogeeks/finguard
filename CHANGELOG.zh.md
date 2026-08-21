@@ -4,6 +4,13 @@
 
 英文：[CHANGELOG.md](CHANGELOG.md)
 
+## [Unreleased]
+
+- 运维控制台说明：`docs/operator-console.zh.md`。在 HTTP 绑定打开 `/console`
+  （本机 `:19191`，Helm `:8088`）。视图需要带 `admin_role` 的调用方 JWT。
+  `try.sh` 桩身份返回 403 是预期。本树中的页面不再发送 `x-finguard-admin-role`。
+  已签名的 `0.1.0` digest 仍是旧字段文案；把 JWT 贴进令牌框即可。
+
 ## [0.1.0] - 2026-08-21
 
 已签名产品镜像（校验见 [supply-chain.zh.md](docs/supply-chain.zh.md)）：

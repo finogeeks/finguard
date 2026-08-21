@@ -10,6 +10,7 @@
 | [lab.zh.md](lab.zh.md) | 实验起来之后：流水、故障关闭、接入智能体 |
 | [install-cluster.zh.md](install-cluster.zh.md) | 集群 Helm（你们的 Postgres + IdP） |
 | [identity-iam.zh.md](identity-iam.zh.md) | 接入你们的 IAM / IdP（OIDC JWT + JWKS；与厂商无关） |
+| [operator-console.zh.md](operator-console.zh.md) | 打开 `/console`；粘贴带 `admin_role` 的调用方 JWT |
 | [vault-custody.zh.md](vault-custody.zh.md) | 接入 Vault / OpenBao（放行时注入凭证） |
 | [supply-chain.zh.md](supply-chain.zh.md) | `cosign verify` + SBOM 证明 |
 | [customer-deploy.zh.md](customer-deploy.zh.md) | 保护第一条写 / 切流 |

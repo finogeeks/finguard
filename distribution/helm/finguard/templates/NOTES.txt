@@ -2,6 +2,9 @@ FinGuard is up. Pin `image.digest` and verify docs/supply-chain.md. Do not claim
 
   Gateway (agents):  Service finguard port {{ .Values.service.gatewayPort }}
   FinGuard HTTP:     Service finguard port {{ .Values.service.httpPort }}
+  Operator console:  http://<that-host>:{{ .Values.service.httpPort }}/console
+                     Paste a caller JWT with admin_role. No login page.
+                     Stub identity → 403 on views. See docs/operator-console.md.
 
 Admin token:
   kubectl get secret {{ .Values.adminTokenExistingSecret | default "finguard-admin" }} -o jsonpath='{.data.token}' | base64 -d; echo

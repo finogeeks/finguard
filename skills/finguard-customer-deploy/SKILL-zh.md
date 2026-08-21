@@ -12,7 +12,9 @@ description: >
 https://github.com/finogeeks/finguard/blob/main/docs/customer-deploy.zh.md
 （英文：`docs/customer-deploy.md`）。IAM / IdP：
 https://github.com/finogeeks/finguard/blob/main/docs/identity-iam.zh.md
-（英文：`docs/identity-iam.md`）。Vault / 托管：
+（英文：`docs/identity-iam.md`）。运维控制台：
+https://github.com/finogeeks/finguard/blob/main/docs/operator-console.zh.md
+（英文：`docs/operator-console.md`）。Vault / 托管：
 https://github.com/finogeeks/finguard/blob/main/docs/vault-custody.zh.md
 （英文：`docs/vault-custody.md`）。本技能只编排步骤，不能代替把 markdown 交给客户。
 

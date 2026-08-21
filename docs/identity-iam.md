@@ -16,7 +16,7 @@ thin token broker if the directory cannot mint that contract. See §3.
 uses **stub identity** and does not prove your IdP.
 
 Related: [install-cluster.md](install-cluster.md), [customer-deploy.md](customer-deploy.md),
-[vault-custody.md](vault-custody.md).
+[vault-custody.md](vault-custody.md), [operator-console.md](operator-console.md).
 
 ---
 
@@ -27,8 +27,9 @@ Related: [install-cluster.md](install-cluster.md), [customer-deploy.md](customer
 | Admin token (`FINGUARD_ADMIN_TOKEN`) | Operators / the gateway that calls FinGuard HTTP | Bearer on `/v1/*` admin APIs (`/v1/journal`, manifests, `POST /v1/decide`, …) |
 | Caller JWT from your IdP | Agent or workload | Who is acting. Verified against your issuer + JWKS |
 
-The admin token is **not** company SSO. This pack has no FinGuard admin console
-and no SAML/OIDC login UI for humans.
+The admin token is **not** company SSO. There is no SAML/OIDC login page for
+humans. Operators open [`/console`](operator-console.md) and paste a **caller
+JWT** with `admin_role` — that is not the admin token.
 
 When FinGuard HTTP APIs need both (for example `POST /v1/actions/invoke` or
 `POST /v1/decide`), send:

@@ -1,7 +1,13 @@
 # FinGuard（公开发行包）
 
 **English:** [README.md](README.md) ·
-[Docs index](docs/README.md)
+[Docs index](docs/README.md) ·
+[快速开始](docs/getting-started.zh.md) ·
+[本机集成实验](docs/lab.zh.md) ·
+[集群安装](docs/install-cluster.zh.md) ·
+[接入 IAM](docs/identity-iam.zh.md) ·
+[运维控制台](docs/operator-console.zh.md) ·
+[接入 Vault](docs/vault-custody.zh.md)
 
 FinGuard 是智能体与企业写接口（CRM、ERP、工单、内部 HTTP）之间的运行时治理层。智能体拿不到企业系统的原始凭证。
 
@@ -44,6 +50,7 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 - [本机集成检查](docs/lab.zh.md) — `try.sh` 之后
 - [集群安装](docs/install-cluster.zh.md) — Helm
 - [接入你们的 IAM](docs/identity-iam.zh.md) — OIDC JWT + JWKS
+- [运维控制台](docs/operator-console.zh.md) — `/console`；粘贴带 `admin_role` 的调用方 JWT
 - [接入 Vault / 凭证托管](docs/vault-custody.zh.md) — 放行时注入 ERP 密钥
 - [保护第一个存量服务](docs/customer-deploy.zh.md) — 切流
 

@@ -5,6 +5,7 @@
 For customer IT or an on-site engineer. Lab first: [getting-started.md](getting-started.md)
 then [lab.md](lab.md). Cluster install is one Helm command (chart starts Postgres): [install-cluster.md](install-cluster.md).
 Company IAM / IdP (OIDC JWT + JWKS): [identity-iam.md](identity-iam.md).
+Operator console (`/console`): [operator-console.md](operator-console.md).
 In-house directories use the same JWT contract or a broker, not a vendor plugin.
 Vault / custody (inject ERP secret on allow): [vault-custody.md](vault-custody.md).
 

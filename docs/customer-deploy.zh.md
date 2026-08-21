@@ -5,6 +5,7 @@ English: [customer-deploy.md](customer-deploy.md)
 给客户信息化或现场工程师。先做实验：[getting-started.zh.md](getting-started.zh.md)，然后
 [lab.zh.md](lab.zh.md)。集群安装是一条 Helm 命令（图表会启动 Postgres）：[install-cluster.zh.md](install-cluster.zh.md)。
 公司 IAM / IdP（OIDC JWT + JWKS）：[identity-iam.zh.md](identity-iam.zh.md)。
+运维控制台（`/console`）：[operator-console.zh.md](operator-console.zh.md)。
 自建目录用同一套 JWT 契约或签发层，不是厂商插件。
 Vault / 凭证托管（放行时注入 ERP 密钥）：[vault-custody.zh.md](vault-custody.zh.md)。
 

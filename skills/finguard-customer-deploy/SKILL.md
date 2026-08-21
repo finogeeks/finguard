@@ -12,7 +12,9 @@ description: >
 Humans follow https://github.com/finogeeks/finguard/blob/main/docs/customer-deploy.md
 (Chinese: `docs/customer-deploy.zh.md`). IAM / IdP:
 https://github.com/finogeeks/finguard/blob/main/docs/identity-iam.md
-(Chinese: `docs/identity-iam.zh.md`). Vault / custody:
+(Chinese: `docs/identity-iam.zh.md`). Operator console:
+https://github.com/finogeeks/finguard/blob/main/docs/operator-console.md
+(Chinese: `docs/operator-console.zh.md`). Vault / custody:
 https://github.com/finogeeks/finguard/blob/main/docs/vault-custody.md
 (Chinese: `docs/vault-custody.zh.md`). This skill orchestrates that procedure.
 It is not a substitute for handing the customer the markdown.

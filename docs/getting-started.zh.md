@@ -47,6 +47,7 @@ FINGUARD_SKIP_PULL=1 ./try.sh
 | --- | --- |
 | `http://127.0.0.1:13000` | 智能体前门（agentgateway） |
 | `http://127.0.0.1:19191` | FinGuard HTTP（`/metrics`、`/v1/*`） |
+| `http://127.0.0.1:19191/console` | 运维控制台。视图需要 OIDC JWT 的 `admin_role`；桩实验为 403。[operator-console.zh.md](operator-console.zh.md) |
 | `http://127.0.0.1:18080` | Mock ERP（仅实验） |
 
 实验管理 Bearer：`local-compose-token`。

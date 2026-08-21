@@ -28,6 +28,7 @@ GitHub 包设置里改可见性，不是本 git 仓库能修的。仅当厂商�
 | --- | --- |
 | `http://127.0.0.1:13000` | 智能体前门（智能体指这里，**不要** 指 ERP） |
 | `http://127.0.0.1:19191` | FinGuard 管理 HTTP |
+| `http://127.0.0.1:19191/console` | 运维控制台（HTML）。视图需要带 `admin_role` 的 OIDC JWT —— 桩实验返回 403。[operator-console.zh.md](operator-console.zh.md) |
 | `http://127.0.0.1:18080` | Mock ERP（仅实验；智能体不得使用此 URL） |
 
 管理 Bearer：`local-compose-token`。

@@ -15,7 +15,8 @@ Okta、Microsoft Entra ID、Keycloak、Zitadel、Auth0 或本地 IAM，也不提
 
 相关：[install-cluster.zh.md](install-cluster.zh.md)、
 [customer-deploy.zh.md](customer-deploy.zh.md)、
-[vault-custody.zh.md](vault-custody.zh.md)。
+[vault-custody.zh.md](vault-custody.zh.md)、
+[operator-console.zh.md](operator-console.zh.md)。
 
 ---
 
@@ -26,8 +27,9 @@ Okta、Microsoft Entra ID、Keycloak、Zitadel、Auth0 或本地 IAM，也不提
 | 管理令牌（`FINGUARD_ADMIN_TOKEN`） | 运维 / 调用 FinGuard HTTP 的网关 | `/v1/*` 管理接口的 Bearer（`/v1/journal`、清单、`POST /v1/decide` 等） |
 | 来自你们 IAM 的调用方 JWT | 智能体或工作负载 | 谁在操作。按 issuer + JWKS 校验 |
 
-管理令牌 **不是** 公司 SSO。本安装包没有 FinGuard 管理控制台，也没有给人用的
-SAML/OIDC 登录界面。
+管理令牌 **不是** 公司 SSO。没有给人用的 SAML/OIDC 登录页。运维打开
+[`/console`](operator-console.zh.md)，粘贴带 `admin_role` 的 **调用方 JWT**
+—— 那不是管理令牌。
 
 当 FinGuard HTTP 接口两者都要（例如 `POST /v1/actions/invoke` 或
 `POST /v1/decide`）时，这样发：

@@ -44,5 +44,6 @@ kubectl get secret finguard-admin -o jsonpath='{.data.token}' | base64 -d; echo
 4. 同一 `Idempotency-Key` 两次 → 上游写入次数仍为 **1**
 
 公司 IAM / OIDC JWKS：[identity-iam.zh.md](identity-iam.zh.md)。
+运维控制台（本 HTTP 端口上的 `/console`）：[operator-console.zh.md](operator-console.zh.md)。
 Vault / 凭证托管：[vault-custody.zh.md](vault-custody.zh.md)。
 保护第一条写：[customer-deploy.zh.md](customer-deploy.zh.md)。

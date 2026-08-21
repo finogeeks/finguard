@@ -26,6 +26,10 @@ https://github.com/finogeeks/finguard/blob/main/docs/supply-chain.zh.md
 [接入 IAM](../../../docs/identity-iam.zh.md)
 （英文：[identity-iam.md](../../../docs/identity-iam.md)）。
 
+运维控制台：HTTP 端口上的 `GET /console`，粘贴带 `admin_role` 的调用方 JWT。步骤：
+[运维控制台](../../../docs/operator-console.zh.md)
+（英文：[operator-console.md](../../../docs/operator-console.md)）。
+
 Vault / OpenBao 托管用环境变量叠加（`FINGUARD_VAULT_ADDR`、token、path、`FINGUARD_INJECT_HEADER`）。图表不模板化。步骤：
 [接入 Vault](../../../docs/vault-custody.zh.md)
 （英文：[vault-custody.md](../../../docs/vault-custody.md)）。
