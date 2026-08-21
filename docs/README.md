@@ -2,8 +2,8 @@
 
 **中文索引：** [README.zh.md](README.zh.md)
 
-This public repository is an install pack (no engine source). Images are unsigned
-and have no SBOM.
+This public repository is an install pack (no engine source). Verify signed
+releases with [supply-chain.md](supply-chain.md). Older tags may still be unsigned.
 
 | Doc | Use |
 | --- | --- |
@@ -12,6 +12,7 @@ and have no SBOM.
 | [install-cluster.md](install-cluster.md) | Helm on your cluster (your Postgres + IdP) |
 | [identity-iam.md](identity-iam.md) | Connect your IAM / IdP (OIDC JWT + JWKS; vendor-agnostic) |
 | [vault-custody.md](vault-custody.md) | Connect Vault / OpenBao (credential inject on allow) |
+| [supply-chain.md](supply-chain.md) | `cosign verify` + SBOM attestation |
 | [customer-deploy.md](customer-deploy.md) | First protected write / cutover |
 
 Skills for AI operators: [../skills/README.md](../skills/README.md).

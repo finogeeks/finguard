@@ -13,8 +13,10 @@ helm upgrade --install finguard distribution/helm/finguard \
 Use your own database: `--set postgres.bundled=false --set postgres.urlExistingSecret=…`.
 Existing gateway: `--set agentgateway.enabled=false` (off-loopback needs TLS).
 
-This chart does **not** ship a signed image or SBOM. Default image is
-`ghcr.io/finogeeks/finguard` (`linux/amd64` and `linux/arm64`). Pin `image.tag`.
+This chart can pin a **signed** image by digest (`image.digest=sha256:…`) after
+a signed GHCR release. Default is tag-only for the lab. Verify:
+https://github.com/finogeeks/finguard/blob/main/docs/supply-chain.md
+Default image is `ghcr.io/finogeeks/finguard` (`linux/amd64` and `linux/arm64`).
 Laptop lab: https://github.com/finogeeks/finguard (`try.sh`).
 
 Live OIDC: `oidc.issuer`, `oidc.audience`, `oidc.jwksUrl`. Empty JWKS = stub

@@ -38,7 +38,11 @@ spec:
       {{- end }}
       containers:
         - name: finguard
+          {{- if .Values.image.digest }}
+          image: "{{ .Values.image.repository }}@{{ .Values.image.digest }}"
+          {{- else }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
             - serve
@@ -52,6 +56,10 @@ spec:
             - name: http
               containerPort: {{ .Values.service.httpPort }}
           env:
+            {{- if .Values.image.digest }}
+            - name: FINGUARD_IMAGE_DIGEST
+              value: {{ .Values.image.digest | quote }}
+            {{- end }}
             - name: FINGUARD_REPLICA_ID
               valueFrom:
                 fieldRef:
@@ -109,7 +117,11 @@ spec:
             periodSeconds: 5
         {{- if .Values.agentgateway.enabled }}
         - name: agentgateway
+          {{- if .Values.image.digest }}
+          image: "{{ .Values.image.repository }}@{{ .Values.image.digest }}"
+          {{- else }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/usr/local/bin/agentgateway"]
           args: ["-f", "/etc/finguard/agentgateway.yaml"]

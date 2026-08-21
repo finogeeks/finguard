@@ -21,7 +21,9 @@ It is not a substitute for handing the customer the markdown.
 
 ## Hard rules
 
-1. Do not claim GA, signed images, SBOM, 信创 directory, or 密评.
+1. Do not claim GA, 信创 directory, or 密评. Claim a **signed image** only after
+   `cosign verify --key cosign.pub` succeeds for the digest you pulled
+   (`docs/supply-chain.md`). Unsigned tags still exist.
 2. Do not treat `./try.sh` as production IdP or design-partner ERP proof.
 3. Do not point `agentgateway.backendHost` at mock-erp.
 4. Do not set `FINGUARD_MCP_REPLAY=patched` unless the customer accepted the

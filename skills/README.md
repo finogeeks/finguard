@@ -10,6 +10,9 @@ the skill file — not the private engine tree.
 | [finguard-try](finguard-try/SKILL.md) | Laptop lab, exactly-once smoke, `lab-exercises.sh` |
 | [finguard-customer-deploy](finguard-customer-deploy/SKILL.md) | Helm + first real write |
 
+Verify a signed image: [../docs/supply-chain.md](../docs/supply-chain.md). Cutting a
+GHCR release is **not** in this public pack (private repo skill `finguard-public-release-ops`).
+
 Further reading (absolute URLs only inside skill bodies if you add more later):
 
 - https://github.com/finogeeks/finguard

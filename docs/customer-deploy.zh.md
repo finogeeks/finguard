@@ -8,7 +8,7 @@ English: [customer-deploy.md](customer-deploy.md)
 自建目录用同一套 JWT 契约或签发层，不是厂商插件。
 Vault / 凭证托管（放行时注入 ERP 密钥）：[vault-custody.zh.md](vault-custody.zh.md)。
 
-**状态：** 镜像未签名、无 SBOM。不要宣称 GA、已进信创目录或已获密评。
+**状态：** 签名发布后钉 digest，并按 [supply-chain.zh.md](supply-chain.zh.md) 校验。不要宣称 GA、已进信创目录或已获密评。
 
 ## 拓扑（短）
 

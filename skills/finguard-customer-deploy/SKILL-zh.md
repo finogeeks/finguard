@@ -20,7 +20,9 @@ https://github.com/finogeeks/finguard/blob/main/docs/vault-custody.zh.md
 
 ## 硬规则
 
-1. 不要宣称 GA、已签名镜像、SBOM、信创目录或密评。
+1. 不要宣称 GA、信创目录或密评。只有对所用 digest 执行
+   `cosign verify --key cosign.pub` 通过后，才可宣称 **已签名镜像**
+   （`docs/supply-chain.zh.md`）。未签名标签仍然存在。
 2. 不要把 `./try.sh` 当作生产 IdP 或设计伙伴 ERP 证明。
 3. 不要把 `agentgateway.backendHost` 指到 mock-erp。
 4. 除非客户接受并披露 pin 时补丁，否则不要设 `FINGUARD_MCP_REPLAY=patched`。

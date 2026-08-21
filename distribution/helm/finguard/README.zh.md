@@ -12,7 +12,9 @@ helm upgrade --install finguard distribution/helm/finguard \
 用你们自己的库：`--set postgres.bundled=false --set postgres.urlExistingSecret=…`。
 已有网关：`--set agentgateway.enabled=false`（非回环需要 TLS）。
 
-本图表 **不** 附带已签名镜像或 SBOM。默认镜像是 `ghcr.io/finogeeks/finguard`（`linux/amd64` 与 `linux/arm64`）。钉死 `image.tag`。本机实验：https://github.com/finogeeks/finguard（仓库根目录 `try.sh`）。
+本图表可在签名发布后用 digest 钉死镜像（`image.digest=sha256:…`）。默认仅按 tag，给实验用。校验：
+https://github.com/finogeeks/finguard/blob/main/docs/supply-chain.zh.md
+默认镜像是 `ghcr.io/finogeeks/finguard`（`linux/amd64` 与 `linux/arm64`）。本机实验：https://github.com/finogeeks/finguard（仓库根目录 `try.sh`）。
 
 线上 OIDC：`oidc.issuer`、`oidc.audience`、`oidc.jwksUrl`。JWKS 为空即桩身份，不是客户验收通过。自建 IAM 用同一组三个值（或 RSA PEM / 签发层）—— 没有厂商插件。GA go 仍为否。步骤：
 [接入 IAM](../../../docs/identity-iam.zh.md)

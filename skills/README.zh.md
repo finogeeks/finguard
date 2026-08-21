@@ -9,6 +9,8 @@
 | [finguard-try](finguard-try/SKILL-zh.md) | 本机实验、恰好一次冒烟、`lab-exercises.sh` |
 | [finguard-customer-deploy](finguard-customer-deploy/SKILL-zh.md) | Helm + 第一条真实写 |
 
+校验已签名镜像：[../docs/supply-chain.zh.md](../docs/supply-chain.zh.md)。切 GHCR 发布不在本公开包内（私有仓库技能 `finguard-public-release-ops`）。
+
 延伸阅读（技能正文只用绝对 URL）：
 
 - https://github.com/finogeeks/finguard

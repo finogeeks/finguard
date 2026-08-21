@@ -3,6 +3,8 @@ replicaCount: 2
 image:
   repository: ghcr.io/finogeeks/finguard
   tag: "0.1.0"
+  # sha256:… of a signed release. Empty = pull by tag (lab). Production should pin digest.
+  digest: ""
   pullPolicy: IfNotPresent
 
 service:

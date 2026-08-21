@@ -8,7 +8,7 @@ Company IAM / IdP (OIDC JWT + JWKS): [identity-iam.md](identity-iam.md).
 In-house directories use the same JWT contract or a broker, not a vendor plugin.
 Vault / custody (inject ERP secret on allow): [vault-custody.md](vault-custody.md).
 
-**Status:** unsigned image, no SBOM. Do not claim GA, 信创 directory listing, or 密评.
+**Status:** pin digest after a signed release; verify [supply-chain.md](supply-chain.md). Do not claim GA, 信创 directory listing, or 密评.
 
 ## Topology (short)
 

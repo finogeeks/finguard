@@ -2,7 +2,7 @@
 
 **English index:** [README.md](README.md)
 
-本公开仓库是安装包（不含引擎源码）。镜像未签名、无 SBOM。
+本公开仓库是安装包（不含引擎源码）。已签名发布的校验见 [supply-chain.zh.md](supply-chain.zh.md)。更早的标签可能仍未签名。
 
 | 文档 | 用途 |
 | --- | --- |
@@ -11,6 +11,7 @@
 | [install-cluster.zh.md](install-cluster.zh.md) | 集群 Helm（你们的 Postgres + IdP） |
 | [identity-iam.zh.md](identity-iam.zh.md) | 接入你们的 IAM / IdP（OIDC JWT + JWKS；与厂商无关） |
 | [vault-custody.zh.md](vault-custody.zh.md) | 接入 Vault / OpenBao（放行时注入凭证） |
+| [supply-chain.zh.md](supply-chain.zh.md) | `cosign verify` + SBOM 证明 |
 | [customer-deploy.zh.md](customer-deploy.zh.md) | 保护第一条写 / 切流 |
 
 给 AI 运维的技能：[../skills/README.zh.md](../skills/README.zh.md)。
