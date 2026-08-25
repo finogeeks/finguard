@@ -1,0 +1,158 @@
+# Public intake on finogeeks/finguard (synced from docs/public-finguard/.github/workflows/).
+#
+# - Adds triage:pending on new bugs ($0 LLM)
+# - Auto bug label for trusted reporters on open
+# - Real-time priority dispatch for trusted reporters (dispatch-by-default; fix agent validates)
+# - Visible blocked state + comment when trusted priority dispatch cannot start
+#
+# Secrets on finogeeks/finguard:
+#   FINGUARD_PRIORITY_DISPATCH_PAT — Geeksfino PAT with Actions R/W on Geeksfino/finguard
+#
+# Variables (keep in sync with Geeksfino/finguard):
+#   PRIORITY_ISSUE_REPORTERS — comma-separated GitHub logins
+name: Issue triage pending
+
+on:
+  issues:
+    types: [opened, labeled, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  priority-intake:
+    if: >-
+      github.event.action == 'opened' ||
+      github.event.action == 'edited' ||
+      (github.event.action == 'labeled' && github.event.label.name == 'bug')
+    runs-on: ubuntu-latest
+    concurrency:
+      group: finguard-priority-intake-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          repository: Geeksfino/finguard
+          token: ${{ secrets.FINGUARD_PRIORITY_DISPATCH_PAT }}
+          path: upstream
+          sparse-checkout: scripts/issue-dispatch
+          sparse-checkout-cone-mode: true
+
+      - name: Ensure intake labels exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh label create "triage:pending" \
+            --repo "${{ github.repository }}" \
+            --description "Awaiting automated or maintainer triage" \
+            --color "FBCA04" \
+            --force
+          gh label create "triage:needs-info" \
+            --repo "${{ github.repository }}" \
+            --description "Missing version, OS, or reproduction detail" \
+            --color "D4C5F9" \
+            --force
+          gh label create "triage:upstream-runtime" \
+            --repo "${{ github.repository }}" \
+            --description "Eligible for upstream runtime or pack fix" \
+            --color "0E8A16" \
+            --force
+          gh label create "bot:priority-blocked" \
+            --repo "${{ github.repository }}" \
+            --description "Trusted priority dispatch blocked; needs maintainer" \
+            --color "E99695" \
+            --force
+
+      - name: Add triage:pending on open or bug label
+        if: >-
+          github.event.action == 'opened' ||
+          (github.event.action == 'labeled' && github.event.label.name == 'bug')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue edit "${{ github.event.issue.number }}" \
+            --repo "${{ github.repository }}" \
+            --add-label "triage:pending"
+
+      - name: Auto bug label for trusted reporters
+        if: >-
+          github.event.action == 'opened' ||
+          github.event.action == 'edited'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRIORITY_ISSUE_REPORTERS: ${{ vars.PRIORITY_ISSUE_REPORTERS }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set -euo pipefail
+          issue_json="$(gh issue view "${ISSUE_NUMBER}" \
+            --repo "${{ github.repository }}" \
+            --json number,title,body,labels,author)"
+          if echo "${issue_json}" | python3 upstream/scripts/issue-dispatch/triage.py --is-priority-reporter; then
+            if ! echo "${issue_json}" | python3 -c 'import json,sys; labels={l["name"].lower() for l in json.load(sys.stdin)["labels"]}; sys.exit(0 if "bug" in labels else 1)'; then
+              gh issue edit "${ISSUE_NUMBER}" \
+                --repo "${{ github.repository }}" \
+                --add-label "bug"
+              echo "Added bug label for trusted reporter"
+            fi
+          fi
+
+      - name: Priority intake
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRIORITY_ISSUE_REPORTERS: ${{ vars.PRIORITY_ISSUE_REPORTERS }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          DISPATCH_PAT: ${{ secrets.FINGUARD_PRIORITY_DISPATCH_PAT }}
+        run: |
+          set -euo pipefail
+          issue_json="$(gh issue view "${ISSUE_NUMBER}" \
+            --repo "${{ github.repository }}" \
+            --json number,title,body,labels,author)"
+          intake_json="$(echo "${issue_json}" | python3 upstream/scripts/issue-dispatch/triage.py --priority-intake)"
+          action="$(echo "${intake_json}" | python3 -c 'import json,sys; print(json.load(sys.stdin)["action"])')"
+          reason="$(echo "${intake_json}" | python3 -c 'import json,sys; print(json.load(sys.stdin)["reason"])')"
+          echo "priority intake -> ${action} (${reason})"
+
+          if [[ "${action}" == "skip" ]]; then
+            echo "Not a priority dispatch candidate"
+            exit 0
+          fi
+
+          if [[ "${action}" == "blocked" ]]; then
+            label="$(echo "${intake_json}" | python3 -c 'import json,sys; print(json.load(sys.stdin)["label"])')"
+            comment="$(echo "${intake_json}" | python3 -c 'import json,sys; print(json.load(sys.stdin)["comment"])')"
+            gh issue edit "${ISSUE_NUMBER}" \
+              --repo "${{ github.repository }}" \
+              --add-label "${label}" \
+              --remove-label "triage:pending"
+            gh issue comment "${ISSUE_NUMBER}" \
+              --repo "${{ github.repository }}" \
+              --body "${comment}"
+            exit 0
+          fi
+
+          if [[ -z "${DISPATCH_PAT}" ]]; then
+            echo "FINGUARD_PRIORITY_DISPATCH_PAT not set; cannot dispatch"
+            gh issue edit "${ISSUE_NUMBER}" \
+              --repo "${{ github.repository }}" \
+              --add-label "bot:priority-blocked" \
+              --remove-label "triage:pending"
+            gh issue comment "${ISSUE_NUMBER}" \
+              --repo "${{ github.repository }}" \
+              --body "**Priority dispatch (automated):** trusted issue is eligible but \`FINGUARD_PRIORITY_DISPATCH_PAT\` is not configured on finogeeks/finguard. Maintainer action required."
+            exit 0
+          fi
+
+          gh issue edit "${ISSUE_NUMBER}" \
+            --repo "${{ github.repository }}" \
+            --add-label "triage:upstream-runtime" \
+            --remove-label "triage:pending"
+
+          GH_TOKEN="${DISPATCH_PAT}" gh workflow run issue-dispatch.yml \
+            --repo Geeksfino/finguard \
+            -f issue="${ISSUE_NUMBER}" \
+            -f limit=1 \
+            -f triage_only=false \
+            -f dry_run=false \
+            -f priority_filter=all
+          echo "Dispatched Geeksfino/finguard issue-dispatch for #${ISSUE_NUMBER}"
