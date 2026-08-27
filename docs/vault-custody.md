@@ -108,7 +108,23 @@ RustyVault is **experimental** (no official image, often `secret/erp` not
 
 ---
 
-## 4. Validate before agents
+## 4. Downstream token-exchange secret (not Vault)
+
+When a manifest declares `auth.downstream: gateway_exchange`, agentgateway
+vends the downstream token. The exchange **client secret** lives in **gateway
+config** (`FINGUARD_OBO_CLIENT_SECRET` expanded from `$FINGUARD_OBO_CLIENT_SECRET`
+in the compiled yaml). It is **not** behind `EnvGuardedSecretSource`.
+
+Control is per-environment gateway config (already how the distribution is
+deployed). The stronger option is `clientAuth.method: privateKeyJwt` with
+certificate credentials, which removes the shared secret entirely.
+
+FinGuard never logs or journals the exchanged access token. It does not hold
+one.
+
+---
+
+## 5. Validate before agents
 
 1. Backend without the inject header → **401** (or equivalent). If the ERP
    accepts unauthenticated writes, custody does not hold.
@@ -123,7 +139,7 @@ Stub identity and custody are independent. Wire the IdP too:
 
 ---
 
-## 5. What not to claim
+## 6. What not to claim
 
 - Laptop `try.sh` PASS = Vault custody is proven
 - Overlaying Vault env = GA, **not 信创**, not 密评

@@ -14,14 +14,38 @@ spec:
       labels:
         app: finguard
     spec:
-      {{- if .Values.postgres.bundled }}
+      {{- if .Values.agentgateway.enabled }}
+      shareProcessNamespace: true
+      {{- end }}
+      {{- if or .Values.postgres.bundled .Values.agentgateway.enabled }}
       initContainers:
+        {{- if .Values.postgres.bundled }}
         - name: wait-postgres
           image: {{ .Values.postgres.image | quote }}
           command:
             - sh
             - -c
             - until pg_isready -h finguard-postgres -U finguard -d finguard; do sleep 2; done
+        {{- end }}
+        {{- if .Values.agentgateway.enabled }}
+        - name: seed-gateway-runtime
+          {{- if .Values.image.digest }}
+          image: "{{ .Values.image.repository }}@{{ .Values.image.digest }}"
+          {{- else }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - '[ -f /runtime/agentgateway.yaml ] || cp /bootstrap/agentgateway.yaml /runtime/agentgateway.yaml'
+          volumeMounts:
+            - name: agentgateway-config
+              mountPath: /bootstrap
+              readOnly: true
+            - name: gateway-runtime
+              mountPath: /runtime
+        {{- end }}
       {{- end }}
       {{- if or .Values.agentgateway.enabled .Values.tls.enabled }}
       volumes:
@@ -29,6 +53,8 @@ spec:
         - name: agentgateway-config
           configMap:
             name: finguard-agentgateway
+        - name: gateway-runtime
+          emptyDir: {}
         {{- end }}
         {{- if .Values.tls.enabled }}
         - name: finguard-tls
@@ -104,11 +130,23 @@ spec:
                   name: finguard-postgres
                   key: url
             {{- end }}
-          {{- if .Values.tls.enabled }}
+            {{- if .Values.agentgateway.enabled }}
+            - name: FINGUARD_DATAPLANE_YAML
+              value: /etc/finguard/agentgateway.yaml
+            - name: FINGUARD_DATAPLANE_RELOAD_CMD
+              value: "sh -c 'for d in /proc/[0-9]*; do tr \"\\0\" \" \" < \"$d/cmdline\" 2>/dev/null | grep -q \"[a]gentgateway\" && kill -HUP \"${d#/proc/}\"; done'"
+            {{- end }}
+          {{- if or .Values.agentgateway.enabled .Values.tls.enabled }}
           volumeMounts:
+            {{- if .Values.agentgateway.enabled }}
+            - name: gateway-runtime
+              mountPath: /etc/finguard
+            {{- end }}
+            {{- if .Values.tls.enabled }}
             - name: finguard-tls
               mountPath: /tls
               readOnly: true
+            {{- end }}
           {{- end }}
           readinessProbe:
             tcpSocket:
@@ -129,7 +167,7 @@ spec:
             - name: gateway
               containerPort: {{ .Values.service.gatewayPort }}
           volumeMounts:
-            - name: agentgateway-config
+            - name: gateway-runtime
               mountPath: /etc/finguard
               readOnly: true
         {{- end }}

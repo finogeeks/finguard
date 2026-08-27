@@ -104,7 +104,21 @@ RustyVault 是 **实验性**（无官方镜像，路径常常是 `secret/erp` �
 
 ---
 
-## 4. 智能体接入前验收
+## 4. 下游令牌交换密钥（不在 Vault）
+
+清单声明 `auth.downstream: gateway_exchange` 时，由 agentgateway 签发下游令牌。
+交换用的 **客户端密钥** 放在 **网关配置** 里（编译 YAML 中的
+`$FINGUARD_OBO_CLIENT_SECRET` 展开为 `FINGUARD_OBO_CLIENT_SECRET`）。它 **不** 走
+`EnvGuardedSecretSource`。
+
+控制面是按环境的网关配置（本来就是发行物的部署方式）。更强的选项是
+`clientAuth.method: privateKeyJwt` 加证书凭证，从而不再有可跨环境泄漏的共享密钥。
+
+FinGuard 从不记录或流水打印交换得到的 access token。它手里没有这张令牌。
+
+---
+
+## 5. 智能体接入前验收
 
 1. 后端没有注入头 → **401**（或等价）。若 ERP 接受无凭证写入，托管不成立。
 2. 经 FinGuard 写（绿地 `:13000` 或已有边缘），**不**发送 ERP 密钥 → 成功，且后端看到注入头。
@@ -116,7 +130,7 @@ RustyVault 是 **实验性**（无官方镜像，路径常常是 `secret/erp` �
 
 ---
 
-## 5. 不要宣称
+## 6. 不要宣称
 
 - 本机 `try.sh` 通过 = 已证明 Vault 托管
 - 叠加了 Vault 环境变量 = GA、信创或密评

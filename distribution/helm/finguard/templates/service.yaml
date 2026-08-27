@@ -6,6 +6,7 @@ spec:
   selector:
     app: finguard
   ports:
+    # do not expose agentgateway admin 15000
     - name: grpc
       port: {{ .Values.service.grpcPort }}
       targetPort: grpc

@@ -87,12 +87,17 @@ FinGuard 挂了之后，经网关的写请求不得打到 mock ERP（`failureMod
 手工：`docker compose -p finguard-try --profile greenfield stop finguard`，然后
 POST `:13000/writes`（不得是带新 ERP 写入的 HTTP 200）。继续实验前把容器再拉起来。
 
-## 5. 登记一条实验用 Action Manifest
+## 5. 直接登记清单已关闭
 
-未登记路径仍可能走 `allow_with_reliability`。登记清单是给智能体要打的那条写命名：
+未登记路径仍可能走 `allow_with_reliability`。直接对有效 body 做
+`POST /v1/action-manifests` 返回 **403** `use_onboardings`。本机 `try.sh` 没有
+OIDC `admin_role`，双人控制上线走集群 `/console`
+（[operator-console.zh.md](operator-console.zh.md)）。本步只证明旧的一次 POST
+上线口已经封上：
 
 ```bash
-curl -fsS -H 'Authorization: Bearer local-compose-token' \
+curl -s -o /tmp/fg-manifest.json -w '%{http_code}' \
+  -H 'Authorization: Bearer local-compose-token' \
   -H 'content-type: application/json' \
   -d '{
     "schema_version": 1,
@@ -106,6 +111,7 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' \
     "auth": {"mode": "obo_user"}
   }' \
   http://127.0.0.1:19191/v1/action-manifests
+# 期望 403 且 {"reason":"use_onboardings"}
 ```
 
 ## 6. 本实验不能证明什么

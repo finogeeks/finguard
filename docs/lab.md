@@ -90,13 +90,17 @@ Manual: `docker compose -p finguard-try --profile greenfield stop finguard`, the
 POST `:13000/writes` (must not be HTTP 200 with a new ERP write). Start the
 container again before you continue.
 
-## 5. Register a lab Action Manifest
+## 5. Live manifest POST is closed
 
-Unknown paths can still `allow_with_reliability`. Registering a manifest is how
-you name the write your agent will call:
+Unknown paths can still `allow_with_reliability`. Direct valid
+`POST /v1/action-manifests` returns **403** `use_onboardings`. Laptop `try.sh`
+has no OIDC `admin_role`, so dual-control onboarding is the cluster `/console`
+path ([operator-console.md](operator-console.md)). This exercise only proves the
+old one-shot register hole is closed:
 
 ```bash
-curl -fsS -H 'Authorization: Bearer local-compose-token' \
+curl -s -o /tmp/fg-manifest.json -w '%{http_code}' \
+  -H 'Authorization: Bearer local-compose-token' \
   -H 'content-type: application/json' \
   -d '{
     "schema_version": 1,
@@ -110,6 +114,7 @@ curl -fsS -H 'Authorization: Bearer local-compose-token' \
     "auth": {"mode": "obo_user"}
   }' \
   http://127.0.0.1:19191/v1/action-manifests
+# expect 403 and {"reason":"use_onboardings"}
 ```
 
 ## 6. What this lab does not prove

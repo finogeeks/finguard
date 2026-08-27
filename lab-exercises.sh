@@ -34,7 +34,7 @@ Run after ./try.sh. Checks:
   3. POST /v1/audit/verify → ok
   4. Agent-shaped POST :13000/writes + replay holds count
   5. Fail-closed: FinGuard stopped → write does not land on mock ERP
-  6. POST /v1/action-manifests for /writes
+  6. POST /v1/action-manifests is 403 use_onboardings
 
 Environment:
   FINGUARD_COMPOSE_PROJECT  Compose project (default: finguard-try)
@@ -167,8 +167,10 @@ else
   info "5/6 fail-closed skipped (FINGUARD_SKIP_FAILCLOSED=1)"
 fi
 
-info "6/6 register action manifest"
-curl -fsS -m 5 -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+info "6/6 live POST /v1/action-manifests is closed"
+body="$(mktemp)"
+code="$(curl -s -m 5 -o "$body" -w '%{http_code}' \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}" \
   -H 'content-type: application/json' \
   -d '{
     "schema_version": 1,
@@ -181,7 +183,10 @@ curl -fsS -m 5 -H "Authorization: Bearer ${ADMIN_TOKEN}" \
     "approval": {},
     "auth": {"mode": "obo_user"}
   }' \
-  "$HTTP/v1/action-manifests" >/dev/null
+  "$HTTP/v1/action-manifests")"
+[ "$code" = "403" ] || die "expected 403 use_onboardings, got HTTP ${code}"
+python3 -c 'import json,sys; assert json.load(open(sys.argv[1]))["reason"]=="use_onboardings"' "$body"
+rm -f "$body"
 
 cat <<EOF
 

@@ -8,6 +8,40 @@ not a second store, not a login product, and not GA by itself.
 
 Do not claim GA, 信创, or 密评 because you opened this page.
 
+## Go-live (onboarding)
+
+Catalog go-live is the **console wizard** and the `/v1/onboardings/*` dual-control
+APIs (System drafts, Security accepts, `change_ticket_id` required). FinGuard
+compiles agentgateway yaml on accept and persists it via **FileSink** when
+`FINGUARD_DATAPLANE_YAML` is set (Helm: `/etc/finguard/agentgateway.yaml` when
+agentgateway is enabled). The write copies over the existing file so the inode
+stays stable for a file watch, then runs `FINGUARD_DATAPLANE_RELOAD_CMD` when
+set (Helm: SIGHUP the sidecar via `shareProcessNamespace`). Confirm the
+agentgateway build reloads on SIGHUP.
+
+After Security accepts an onboarding, its live Catalog card exposes the non-mutating
+cutover probes (`POST /v1/onboardings/{id}/cutover-probes`): unauthenticated-admin
+rejection, Prometheus metrics text, audit-chain verification, and fail-closed
+generated-yaml posture. Existing-gateway cards mark the yaml probe as skipped
+because FinGuard does not own that gateway's route. Production cutover never
+sends an ERP write probe.
+
+Do **not** use agentgateway admin `:15000` or `:15000/ui` as an apply path. That
+socket is a same-pod debug surface only; the Helm Service does not expose port
+15000. Do not POST routes to the admin API or author Traffic Routes by hand.
+
+Compile-time rejections for `auth.downstream: gateway_exchange` (HTTP 409,
+`reason` in the body):
+
+| Code | When |
+| --- | --- |
+| `downstream_exchange_unsupported_topology` | `existing_gateway` topology (FinGuard does not own that yaml) |
+| `downstream_exchange_unsupported_protocol` | MCP protocol family |
+| `downstream_exchange_conflict` | Manifests on one compiled route disagree on audience / resource / scope |
+| `downstream_exchange_unconfigured` | No `FINGUARD_OBO_TOKEN_HOST` / `FINGUARD_OBO_CLIENT_ID` (or secret env is not a `$VAR` reference) |
+
+These fire at Security accept, never at request time.
+
 ## Open it
 
 | Setup | URL |
@@ -31,8 +65,8 @@ Views call `/v1/catalog`, `/v1/sessions`, `/v1/halts`, `/v1/secrets`, and
 
 | `admin_role` | Views |
 | --- | --- |
-| `system` | Overview, Catalog |
-| `security` | Overview, Controls (halt declare / list / lift), Secrets (metadata only) |
+| `system` | Overview, Catalog, Onboard |
+| `security` | Overview, Controls (halt declare / list / lift), Secrets (metadata only), live cutover probes |
 | `audit` | Sessions |
 
 Mint that claim in your IdP (same RS256 JWT + JWKS as [identity-iam.md](identity-iam.md)).

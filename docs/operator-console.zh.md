@@ -8,6 +8,26 @@ API（目录、会话、熔断、密钥、告警）的渲染层。不是第二�
 
 不要因为打开了这个页面就宣称 GA、信创或密评。
 
+## 上线（onboarding）
+
+目录上线走控制台向导和 `/v1/onboardings/*` 双人审批（System 起草、Security
+接受、必须带 `change_ticket_id`）。Security 接受后，**FileSink** 在
+`FINGUARD_DATAPLANE_YAML` 已设置时写入 agentgateway yaml（就地 copy，保留
+inode），然后执行 `FINGUARD_DATAPLANE_RELOAD_CMD`（Helm：`shareProcessNamespace`
+后对 sidecar SIGHUP）。Live 卡片可跑非写探测 `POST /v1/onboardings/{id}/cutover-probes`。
+不要把 agentgateway 管理口 `:15000` 当 apply 路径。
+
+`auth.downstream: gateway_exchange` 的编译期拒绝（HTTP 409，body 里的 `reason`）：
+
+| 代码 | 何时 |
+| --- | --- |
+| `downstream_exchange_unsupported_topology` | `existing_gateway` 拓扑（FinGuard 不拥有那份 yaml） |
+| `downstream_exchange_unsupported_protocol` | MCP 协议族 |
+| `downstream_exchange_conflict` | 同一条编译路由上的清单在 audience / resource / scope 上不一致 |
+| `downstream_exchange_unconfigured` | 未配置 `FINGUARD_OBO_TOKEN_HOST` / `FINGUARD_OBO_CLIENT_ID`（或密钥环境变量不是 `$VAR` 引用） |
+
+这些在 Security 接受时触发，不会在请求时触发。
+
 ## 怎么打开
 
 | 场景 | URL |
@@ -30,8 +50,8 @@ Helm 安装后的 NOTES 会打印 HTTP 端口。
 
 | `admin_role` | 视图 |
 | --- | --- |
-| `system` | 总览、目录 |
-| `security` | 总览、控制（熔断声明 / 列表 / 解除）、密钥（仅元数据） |
+| `system` | 总览、目录、Onboard |
+| `security` | 总览、控制（熔断声明 / 列表 / 解除）、密钥（仅元数据）、live cutover 探测 |
 | `audit` | 会话 |
 
 在你们的 IdP 上签发该声明（与 [identity-iam.zh.md](identity-iam.zh.md) 同一套

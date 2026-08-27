@@ -40,8 +40,9 @@ x-finguard-id-token: <caller-jwt>
 ```
 
 这些接口上不要把调用方 JWT 放进 `Authorization` —— 那个头是管理令牌。
-**绿地数据面**（agentgateway `:13000`）上，智能体在写请求里带
-`x-finguard-id-token`；FinGuard 从转发头读取。
+**绿地数据面**（agentgateway `:13000`）上，智能体用 `Authorization: Bearer`
+发送调用方 JWT（推荐 —— agentgateway 默认剥离后仍会把它送进 `backendAuth`
+交换）。`x-finguard-id-token` 仍然接受。不要把管理令牌放到数据面上。
 
 ---
 
@@ -54,14 +55,21 @@ x-finguard-id-token: <caller-jwt>
 | `alg` | `RS256` |
 | `iss` | 与 `oidc.issuer` **整串完全一致**（尾斜杠也算） |
 | `aud` | 必须包含 `oidc.audience`（Helm 默认：`finguard`） |
-| `sub` | 工作负载 / 客户端主体；记为调用方 |
+| `sub` | 令牌签发给谁。`obo_user` 时这是 **自然人**（RFC 8693）。记为 `acted_as`。没有 `act` 的令牌是工作负载（或自然人自己的交互令牌），**不** 满足 `obo_user` |
 | `exp` | 必填。时钟宽限为 **0** —— 过期即拒 |
-| `act.sub` | Action Manifest 为 `auth.mode: obo_user` 时必填（RFC 8693 的 `act` 声明）。这是 **自然人**。只有令牌 `sub` 不够 |
+| `act.sub` | Action Manifest 为 `auth.mode: obo_user` 时必填。这是代自然人行事的 **智能体 / 工作负载**。记为调用方 `sub`。空的 `act.sub` 视为无委托 |
 | `env` | 连接器或 Action Manifest 标明环境（如 `production`）时必填。缺省或不匹配是 `environment_mismatch`，不是跳过。OIDC 开启时忽略伪造的 `x-finguard-environment` |
 | `admin_role` | 可选。`System` / `Security` / `Audit`（三员）。只取已校验 JWT。忽略伪造的 `x-finguard-admin-role`。熔断声明 / 列表 / 解除需要 `Security` |
 
 JWKS 须是标准 `{"keys":[…]}`，且至少有一把 `kty: RSA`。FinGuard 从 Pod 用
 HTTP(S) 拉取。
+
+智能体持有的令牌 `sub` 是自然人、audience 限制为 `finguard` —— 与 Entra OBO
+中间层令牌的形状相同。FinGuard 不另造一套声明约定。
+
+`gateway_exchange` 清单上的 `auth.scope` 是 **声明并记录**，不是授予。FinGuard
+把它写进网关的交换请求，并在流水里记下 `downstream_scope=…`。IdP 是否兑现、
+X 是否执行，是它们的决定。
 
 **不算客户验收通过：** JWKS 为空（桩身份）、HS256 共享密钥 JWT。
 
@@ -87,7 +95,7 @@ HTTP(S) 拉取。
 | 任意签发方已能签发 **RS256 JWT**，且 FinGuard Pod 能 GET 到 JWKS | Helm `oidc.issuer` + `oidc.audience` + `oidc.jwksUrl`，从 **真实令牌** 抄。步骤与 Keycloak 相同。 | 厂商专用连接器、realm 导出、SAML 元数据文件 |
 | 有 RS256 JWT，但 Pod 够不到 JWKS（隔离网、分裂 DNS） | 叠加 `FINGUARD_OIDC_RSA_PEM`（IdP **公钥**）。仍要 issuer。 | 用 HS256 共享密钥当客户验收通过 |
 | 目录只有 SAML、LDAP、Kerberos、CAS 或 ADFS WS-Federation | 若产品自带 OIDC 就打开（CAS 6+、不少 4A），**或** 跑一层薄 JWT 签发。FinGuard 仍只校验 JWT。 | 让 FinGuard 去做 LDAP bind 或消费 SAML 断言 |
-| 边缘已校验 mTLS 并转发 Envoy `x-forwarded-client-cert`，没有 JWT 计划 | 叠加 `FINGUARD_MTLS_TRUST_XFCC=true`。工作负载高保证。`obo_user` 仍要 JWT 的 `act.sub`。 | OIDC 场景用 XFCC 代替 JWKS；可伪造的 `x-finguard-acted-as` |
+| 边缘已校验 mTLS 并转发 Envoy `x-forwarded-client-cert`，没有 JWT 计划 | 叠加 `FINGUARD_MTLS_TRUST_XFCC=true`。工作负载高保证。`obo_user` 仍要 JWT 的 `act`（智能体）和 `sub`（自然人）。 | OIDC 场景用 XFCC 代替 JWKS；可伪造的 `x-finguard-acted-as` |
 | 签不出 RS256，也不加签发层 | **阻塞。** 记下来。不要用桩身份上生产。 | 空 JWKS / 桩身份 / HS256 当生产身份 |
 
 ### 薄签发服务（客户或集成商范围）
@@ -96,10 +104,12 @@ HTTP(S) 拉取。
 
 1. 用客户已有协议对智能体做认证。
 2. 签发短时 RS256 JWT：`iss`、`aud`（Helm `oidc.audience`，或他们已有的 API
-   标识）、`sub`（工作负载）、`exp`；清单为 `obo_user` 时带 `act.sub`。
+   标识）、`sub`（`obo_user` 写操作时是 **自然人**，否则是工作负载）、`exp`；
+   清单为 `obo_user` 时带 `act.sub`（**智能体**）。
 3. 发布标准 JWKS `{"keys":[…]}` 且含 `kty: RSA`，**或** 把 RSA 公钥 PEM 交给
    运维挂载。
-4. 智能体把该 JWT 放在 `x-finguard-id-token`。
+4. 智能体在数据面上用 `Authorization: Bearer` 发送该 JWT（推荐）。
+   `x-finguard-id-token` 仍然接受。
 
 签发服务不是 FinGuard 的 crate、Helm 子图表或已认证 IdP。从它 **实际签发的令牌**
 抄 `iss` —— 尾斜杠也算。
@@ -152,9 +162,9 @@ FinGuard Pod 必须能 **GET** `jwksUrl`（出站 / 防火墙 / TLS 信任）。
 3. 发布 JWKS。确认集群里的 FinGuard 能拉到。
 4. 从 **真实令牌** 的 `iss` 声明抄 issuer 字符串 —— 不要猜。发现文档
    （`/.well-known/openid-configuration`）里的 `issuer` 必须与声明完全一致。
-5. 对 `obo_user` 写操作，在令牌上发出 RFC 8693 的
-   `act: { "sub": "<human id>" }`。若 IdP 没有 `act` 声明，用令牌定制
-   （自定义声明、令牌交换，或 FinGuard 前的薄代理）映射。OIDC 开启时 FinGuard
+5. 对 `obo_user` 写操作，发出 RFC 8693 声明：`sub` = 自然人，`act.sub` =
+   智能体。Entra OBO、Keycloak、Okta、Auth0 在 on-behalf-of 令牌上本来就把
+   `sub` 签给自然人；不要再倒过来做成自定义声明。OIDC 开启时 FinGuard
    **忽略** `x-finguard-acted-as`，所以不能靠自由填写的头来满足代表用户。
 
 常见 issuer / JWKS（替换占位符；以发现文档为准）：
@@ -176,7 +186,8 @@ FinGuard Pod 必须能 **GET** `jwksUrl`（出站 / 防火墙 / TLS 信任）。
 ## 6. 智能体与网关接线
 
 **绿地**（`agentgateway.enabled=true`）：智能体打 FinGuard Service 的 **13000**
-端口，不要打 ERP 原地址。每次受治理的写都转发 `x-finguard-id-token`。
+端口，不要打 ERP 原地址。每次受治理的写用 `Authorization: Bearer <caller-jwt>`
+（推荐）。`x-finguard-id-token` 仍然接受。
 
 **已有 Envoy 族边缘：** `ext_authz` + `ext_proc` 打 FinGuard gRPC（`:19090`），
 `failureMode: deny` / `failClosed`。转发调用方 JWT 头，不要剥掉。
@@ -188,8 +199,9 @@ FinGuard Pod 必须能 **GET** `jwksUrl`（出站 / 防火墙 / TLS 信任）。
 
 ## 7. 智能体接入前验收
 
-错误 `iss`、错误 `aud` 或过期 JWT → **401**。清单为 `obo_user` 时，带
-`act.sub` 的合法 JWT 必须把自然人记入流水，而不是服务账号 `sub`。
+错误 `iss`、错误 `aud` 或过期 JWT → **401**。清单为 `obo_user` 时，合法 JWT
+（`sub` = 自然人，`act.sub` = 智能体）必须把自然人记入 `act_sub`、把智能体记为
+调用方，而不是让服务账号 `sub` 冒充用户。
 
 ```bash
 # 期望 401（错误 issuer）。Helm HTTP 绑定是 :8088。

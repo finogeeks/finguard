@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 2 # FileSink dataplane yaml is per-pod emptyDir; greenfield go-live needs 1 replica until a shared store exists.
 
 image:
   repository: ghcr.io/finogeeks/finguard

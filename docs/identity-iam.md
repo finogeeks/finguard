@@ -40,9 +40,10 @@ x-finguard-id-token: <caller-jwt>
 ```
 
 Do not put the caller JWT in `Authorization` on those APIs — that header is the
-admin token. On the **greenfield data plane** (agentgateway `:13000`), the agent
-sends `x-finguard-id-token` on the write request; FinGuard reads it from the
-forwarded headers.
+admin token. On the **greenfield data plane** (agentgateway `:13000`), send the
+caller JWT as `Authorization: Bearer` (preferred — agentgateway's default strip
+then still forwards it into `backendAuth` exchange). `x-finguard-id-token` is
+still accepted. Do not put the admin token on the data plane.
 
 ---
 
@@ -56,14 +57,23 @@ reach JWKS).
 | `alg` | `RS256` |
 | `iss` | Exact string match of `oidc.issuer` (trailing slash matters) |
 | `aud` | Must include `oidc.audience` (Helm default: `finguard`) |
-| `sub` | Workload / client subject; recorded as caller |
+| `sub` | Party the token was issued FOR. On `obo_user` this is the **human** (RFC 8693). Recorded as `acted_as`. A token with no `act` is a workload (or the human's own interactive token) and does **not** satisfy `obo_user` |
 | `exp` | Required. Clock leeway is **0** — expired tokens are rejected |
-| `act.sub` | Required when the Action Manifest uses `auth.mode: obo_user` (RFC 8693 `act` claim). This is the **human**. Token `sub` alone is not enough |
+| `act.sub` | Required when the Action Manifest uses `auth.mode: obo_user`. This is the **agent / workload** acting on the human's behalf. Recorded as caller `sub`. Empty `act.sub` is treated as no delegation |
 | `env` | Required when a connector or Action Manifest declares an environment (for example `production`). A missing or mismatched claim is `environment_mismatch`, not a skip. Spoofed `x-finguard-environment` is ignored when OIDC is on |
 | `admin_role` | Optional. `System` / `Security` / `Audit` (三员). Taken from the verified JWT only. Spoofed `x-finguard-admin-role` is ignored. Halt declare/list/lift require `Security` |
 
 JWKS must be a standard `{"keys":[…]}` document with at least one `kty: RSA`
 key. FinGuard fetches it over HTTP(S) from the pod.
+
+The agent holds a token whose `sub` is the human, audience-restricted to
+`finguard` — the same shape an Entra OBO middle-tier token already has.
+FinGuard does not invent a second claim convention.
+
+`auth.scope` on a `gateway_exchange` manifest is **declared and recorded**,
+never granted. FinGuard emits the declared scopes into the gateway exchange
+request and journals `downstream_scope=…`. Whether the IdP honors them and
+whether X enforces them are their decisions.
 
 **Not a customer pass:** empty JWKS (stub identity), HS256 shared-secret JWTs.
 
@@ -89,7 +99,7 @@ Do not add a FinGuard adapter per customer IdP. Wire the **token contract** in
 | Any issuer that already mints **RS256 JWT** + a JWKS URL the FinGuard pod can GET | Helm `oidc.issuer` + `oidc.audience` + `oidc.jwksUrl` copied from a **real token**. Same steps as Keycloak. | A vendor-specific connector, realm export, or SAML metadata file |
 | RS256 JWT yes, but the pod cannot reach JWKS (air-gap, split DNS) | Overlay `FINGUARD_OIDC_RSA_PEM` (IdP **public** key). Issuer still required. | HS256 shared secret as a customer pass |
 | Directory is SAML, LDAP, Kerberos, CAS, or ADFS WS-Federation only | Enable OIDC on that product if it has it (CAS 6+, many 4A suites), **or** run a thin JWT broker. FinGuard still verifies JWTs. | Teaching FinGuard to bind LDAP or consume SAML assertions |
-| Edge already verified mTLS and forwards Envoy `x-forwarded-client-cert`; no JWT program | Overlay `FINGUARD_MTLS_TRUST_XFCC=true`. High assurance for the workload. `obo_user` still needs JWT `act.sub`. | Using XFCC instead of JWKS on an OIDC engagement; spoofable `x-finguard-acted-as` |
+| Edge already verified mTLS and forwards Envoy `x-forwarded-client-cert`; no JWT program | Overlay `FINGUARD_MTLS_TRUST_XFCC=true`. High assurance for the workload. `obo_user` still needs JWT `act` (agent) plus `sub` (human). | Using XFCC instead of JWKS on an OIDC engagement; spoofable `x-finguard-acted-as` |
 | Cannot mint RS256 and will not add a broker | **Blocker.** Record it. Do not ship stub identity. | Empty JWKS / stub / HS256 as production identity |
 
 ### Thin broker (customer or SI scope)
@@ -100,11 +110,13 @@ FinGuard:
 1. Authenticate the agent against the customer's IAM with the protocol they
    already have.
 2. Mint a short-lived RS256 JWT: `iss`, `aud` (Helm `oidc.audience`, or the API
-   id they already use), `sub` (workload), `exp`, and `act.sub` when the Action
-   Manifest is `obo_user`.
+   id they already use), `sub` (the **human** on `obo_user` writes; the workload
+   otherwise), `exp`, and `act.sub` (the **agent**) when the Action Manifest is
+   `obo_user`.
 3. Publish a standard JWKS `{"keys":[…]}` with `kty: RSA`, **or** give
    operations the RSA public PEM to mount.
-4. Agents send that JWT as `x-finguard-id-token`.
+4. Agents send that JWT as `Authorization: Bearer` on the data plane
+   (preferred). `x-finguard-id-token` remains accepted.
 
 The broker is not a FinGuard crate, Helm subchart, or certified IdP. Copy `iss`
 from a token the broker actually issues — trailing slashes count.
@@ -163,9 +175,9 @@ Vendor-agnostic checklist:
 4. Copy the issuer string from a **real token's** `iss` claim — do not guess.
    Discovery metadata (`/.well-known/openid-configuration`) `issuer` must match
    the claim exactly.
-5. For `obo_user` writes, emit RFC 8693 `act: { "sub": "<human id>" }` on the
-   token. If your IdP has no `act` claim, map it with a token customization
-   (custom claim, token exchange, or a thin broker in front of FinGuard).
+5. For `obo_user` writes, emit RFC 8693 claims: `sub` = the human, `act.sub` =
+   the agent. Entra OBO, Keycloak, Okta, and Auth0 already mint `sub` as the
+   human on an on-behalf-of token; do not invert that into a custom claim.
    FinGuard **ignores** `x-finguard-acted-as` when OIDC is on, so a free-form
    spoof header cannot satisfy on-behalf-of.
 
@@ -189,8 +201,8 @@ three Helm values — see §3.
 ## 6. Agent and gateway wiring
 
 **Greenfield** (`agentgateway.enabled=true`): agents call the FinGuard Service
-on port **13000**, never the raw ERP. Forward `x-finguard-id-token` on each
-governed write.
+on port **13000**, never the raw ERP. Send `Authorization: Bearer <caller-jwt>`
+on each governed write (preferred). `x-finguard-id-token` is still accepted.
 
 **Existing Envoy-family edge:** `ext_authz` + `ext_proc` to FinGuard gRPC
 (`:19090`), `failureMode: deny` / `failClosed`. Forward the caller JWT header
@@ -203,9 +215,9 @@ Bearer, and `x-finguard-id-token`.
 
 ## 7. Validate before agents
 
-Wrong `iss`, wrong `aud`, or expired JWT → **401**. A valid JWT with `act.sub`
-must journal the human, not a service-account `sub`, when the manifest is
-`obo_user`.
+Wrong `iss`, wrong `aud`, or expired JWT → **401**. A valid `obo_user` JWT
+(`sub` = human, `act.sub` = agent) must journal the human in `act_sub` and the
+agent as caller, not a service-account `sub` pretending to be the user.
 
 ```bash
 # Expect 401 (wrong issuer). HTTP bind in Helm is :8088.
