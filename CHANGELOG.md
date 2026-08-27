@@ -4,11 +4,33 @@ Public-facing notes for `finogeeks/finguard`. Do not claim GA, 信创, or 密评
 
 ## [Unreleased]
 
-- Operator console how-to: `docs/operator-console.md` (EN+zh). Open `/console` on
-  the HTTP bind (lab `:19191`, Helm `:8088`). Views need a caller JWT with
-  `admin_role`. Stub `try.sh` identity returns 403 — expected. The page in this
-  tree no longer sends `x-finguard-admin-role`. The already-signed `0.1.0` digest
-  still has older field labels; paste the JWT in the token field either way.
+## [0.1.3] - 2026-08-27
+
+Signed product image (verify [supply-chain.md](docs/supply-chain.md)):
+
+`ghcr.io/finogeeks/finguard@sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c`
+
+Helm pin:
+
+```bash
+--set image.tag=0.1.3 \
+--set image.digest=sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c
+```
+
+Mock-ERP is not signed. Do not claim GA.
+
+### Added
+
+- Dual-control onboarding (`/v1/onboardings`) and operator console `/console`.
+  Views need a caller JWT with `admin_role`. Stub `try.sh` identity returns 403.
+- RFC 8693 inbound claims (`sub` = human, `act.sub` = agent) with gateway-vended
+  downstream token exchange (`auth.downstream: gateway_exchange`). FinGuard does
+  not mint the downstream token.
+
+### Changed
+
+- Public pack lab pointers use `try.sh` / `lab-exercises.sh` (not private
+  `integration-lab`).
 
 ## [0.1.0] - 2026-08-21
 

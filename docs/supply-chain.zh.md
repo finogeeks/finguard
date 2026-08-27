@@ -8,16 +8,16 @@ English: [supply-chain.md](supply-chain.md)
 
 公钥在本仓库：[`cosign.pub`](../cosign.pub)。
 
-当前已签名的 `0.1.0` digest（2026-08-21）：
+当前已签名的 `0.1.3` digest（2026-08-27）：
 
-`sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5`
+`sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c`
 
 此 digest 之前的同名标签未签名。更新说明：[CHANGELOG.zh.md](../CHANGELOG.zh.md)。不要宣称 GA。
 
 ## 校验（客户 / 现场工程师）
 
 ```bash
-IMG=ghcr.io/finogeeks/finguard@sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5
+IMG=ghcr.io/finogeeks/finguard@sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c
 
 curl -fsSL -o cosign.pub \
   https://raw.githubusercontent.com/finogeeks/finguard/main/cosign.pub

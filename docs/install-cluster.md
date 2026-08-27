@@ -14,8 +14,8 @@ You need a Kubernetes cluster, Helm, and the hostname of **one real write API**
 
 ```bash
 helm upgrade --install finguard distribution/helm/finguard \
-  --set image.tag=0.1.0 \
-  --set image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5 \
+  --set image.tag=0.1.3 \
+  --set image.digest=sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c \
   --set agentgateway.backendHost='erp.example.svc:80'
 ```
 

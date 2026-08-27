@@ -9,7 +9,7 @@ OpenBao 或你们的密管，产品镜像里也不带 Vault 服务。
 **没有按厂商编写的 Vault 插件。** HashiCorp、OpenBao 和实验性 RustyVault 能接上，
 是因为它们提供 FinGuard 已调用的 KV HTTP API。
 
-**状态：** 已签名 `0.1.0` 镜像 — 钉 digest 并按
+**状态：** 已签名 `0.1.3` 镜像 — 钉 digest 并按
 [supply-chain.zh.md](supply-chain.zh.md) 校验。不要宣称 GA。本机实验（`try.sh`）**不**启动 Vault，
 也不能证明托管。
 

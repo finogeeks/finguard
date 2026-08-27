@@ -11,7 +11,7 @@ work only because they mint the RS256 JWT + JWKS contract below. An in-house
 IAM, CAS, 4A platform, or regional IdP is supported the same way — or via a
 thin token broker if the directory cannot mint that contract. See §3.
 
-**Status:** signed `0.1.0` image — pin digest and verify
+**Status:** signed `0.1.3` image — pin digest and verify
 [supply-chain.md](supply-chain.md). Do not claim GA. The laptop lab (`try.sh`)
 uses **stub identity** and does not prove your IdP.
 
@@ -129,8 +129,8 @@ Set issuer, audience, and JWKS. Empty `jwksUrl` keeps stub identity.
 
 ```bash
 helm upgrade --install finguard distribution/helm/finguard \
-  --set image.tag=0.1.0 \
-  --set image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5 \
+  --set image.tag=0.1.3 \
+  --set image.digest=sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c \
   --set agentgateway.backendHost='erp.example.svc:80' \
   --set oidc.issuer='https://idp.example.com/realms/prod' \
   --set oidc.audience=finguard \

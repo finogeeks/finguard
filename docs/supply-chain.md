@@ -10,9 +10,9 @@ expected.
 
 The public key lives in this repository: [`cosign.pub`](../cosign.pub).
 
-Current signed `0.1.0` digest (2026-08-21):
+Current signed `0.1.3` digest (2026-08-27):
 
-`sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5`
+`sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c`
 
 Same-name tags from before this digest are unsigned. Changelog:
 [CHANGELOG.md](../CHANGELOG.md). Do not claim GA.
@@ -21,7 +21,7 @@ Same-name tags from before this digest are unsigned. Changelog:
 
 ```bash
 # Prefer digest over tag. Helm: --set image.digest=sha256:…
-IMG=ghcr.io/finogeeks/finguard@sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5
+IMG=ghcr.io/finogeeks/finguard@sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c
 
 curl -fsSL -o cosign.pub \
   https://raw.githubusercontent.com/finogeeks/finguard/main/cosign.pub

@@ -21,7 +21,7 @@ FinGuard is the runtime governance layer between agents and enterprise write API
 
 This repository is the **public home** for install docs, the laptop lab script, Helm,
 and operator skills. It does **not** contain engine source. **Sign + SBOM:** verify
-[`docs/supply-chain.md`](docs/supply-chain.md) for the current `0.1.0` digest. Same-name
+[`docs/supply-chain.md`](docs/supply-chain.md) for the current `0.1.3` digest. Same-name
 tags from before that digest remain unsigned. Do not treat GHCR as a GA claim.
 
 ## Quick lab (recommended first)

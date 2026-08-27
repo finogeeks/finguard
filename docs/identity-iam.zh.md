@@ -9,7 +9,7 @@ Okta、Microsoft Entra ID、Keycloak、Zitadel、Auth0 或本地 IAM，也不提
 签发下文的 RS256 JWT + JWKS 契约。自建 IAM、CAS、4A 或区域 IdP 用同一条路径；
 目录签不出该契约时，在前面加一层薄 JWT 签发服务。见第 3 节。
 
-**状态：** 已签名 `0.1.0` 镜像 — 钉 digest 并按
+**状态：** 已签名 `0.1.3` 镜像 — 钉 digest 并按
 [supply-chain.zh.md](supply-chain.zh.md) 校验。不要宣称 GA。本机实验（`try.sh`）用 **桩身份**，
 不能证明你们的 IdP。
 
@@ -122,8 +122,8 @@ X 是否执行，是它们的决定。
 
 ```bash
 helm upgrade --install finguard distribution/helm/finguard \
-  --set image.tag=0.1.0 \
-  --set image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5 \
+  --set image.tag=0.1.3 \
+  --set image.digest=sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c \
   --set agentgateway.backendHost='erp.example.svc:80' \
   --set oidc.issuer='https://idp.example.com/realms/prod' \
   --set oidc.audience=finguard \

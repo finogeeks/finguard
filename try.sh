@@ -14,7 +14,7 @@ set -eu
 
 REPO_DEFAULT="finogeeks/finguard"
 REPO="${FINGUARD_REPO:-$REPO_DEFAULT}"
-VERSION_RAW="${FINGUARD_VERSION:-0.1.0}"
+VERSION_RAW="${FINGUARD_VERSION:-0.1.3}"
 PACK_DIR_DEFAULT="${HOME}/.finguard-try"
 IMAGE_NS="${FINGUARD_IMAGE_NS:-ghcr.io/finogeeks}"
 SKIP_PULL="${FINGUARD_SKIP_PULL:-0}"
@@ -43,7 +43,7 @@ Usage:
   try.sh [--version <x.y.z>] [--down] [--help]
 
 Environment:
-  FINGUARD_VERSION          Image/pack version (default: 0.1.0)
+  FINGUARD_VERSION          Image/pack version (default: 0.1.3)
   FINGUARD_REPO             GitHub owner/name to clone when not in a pack (default: finogeeks/finguard)
   FINGUARD_PACK_DIR         Where to clone the public pack (default: ~/.finguard-try)
   FINGUARD_IMAGE_NS         Registry namespace (default: ghcr.io/finogeeks)
@@ -52,7 +52,7 @@ Environment:
 
 Examples:
   curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
-  ./try.sh --version 0.1.0
+  ./try.sh --version 0.1.3
   FINGUARD_SKIP_PULL=1 ./try.sh
   ./try.sh --down
 

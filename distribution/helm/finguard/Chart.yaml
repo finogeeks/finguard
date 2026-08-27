@@ -3,4 +3,4 @@ name: finguard
 description: "FinGuard: one image (finguard + agentgateway); chart starts Postgres unless you bring your own"
 type: application
 version: 0.1.0
-appVersion: "0.1.0"
+appVersion: "0.1.3"

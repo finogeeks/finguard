@@ -65,7 +65,7 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 拉取未签名产品镜像（或导入客户仓库并钉 digest）：
 
 ```bash
-docker pull ghcr.io/finogeeks/finguard:0.1.0
+docker pull ghcr.io/finogeeks/finguard:0.1.3
 ```
 
 本机实验 / 本地标签：`./scripts/prod/build-ghcr-images.sh`，然后 `FINGUARD_SKIP_PULL=1 docs/public-finguard/try.sh`。

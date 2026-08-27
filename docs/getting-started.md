@@ -28,7 +28,7 @@ From a clone of this repository:
 Pin a version:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh -s -- --version 0.1.0
+curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh -s -- --version 0.1.3
 ```
 
 Use images you already built or loaded:

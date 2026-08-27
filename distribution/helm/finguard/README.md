@@ -7,17 +7,17 @@ and Postgres (started by this chart unless you turn that off).
 
 ```bash
 helm upgrade --install finguard distribution/helm/finguard \
-  --set image.tag=0.1.0 \
-  --set image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5 \
+  --set image.tag=0.1.3 \
+  --set image.digest=sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c \
   --set agentgateway.backendHost='erp.example.svc:80'
 ```
 
 Use your own database: `--set postgres.bundled=false --set postgres.urlExistingSecret=…`.
 Existing gateway: `--set agentgateway.enabled=false` (off-loopback needs TLS).
 
-This chart can pin a **signed** image by digest. Current `0.1.0` pin:
+This chart can pin a **signed** image by digest. Current `0.1.3` pin:
 
-`image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5`
+`image.digest=sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c`
 
 Default `values.yaml` is still tag-only for the laptop lab. Verify:
 https://github.com/finogeeks/finguard/blob/main/docs/supply-chain.md

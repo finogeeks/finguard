@@ -27,7 +27,7 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 钉死版本：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh -s -- --version 0.1.0
+curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh -s -- --version 0.1.3
 ```
 
 使用已经构建或导入的镜像：

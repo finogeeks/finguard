@@ -6,17 +6,17 @@ English: [README.md](README.md)
 
 ```bash
 helm upgrade --install finguard distribution/helm/finguard \
-  --set image.tag=0.1.0 \
-  --set image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5 \
+  --set image.tag=0.1.3 \
+  --set image.digest=sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c \
   --set agentgateway.backendHost='erp.example.svc:80'
 ```
 
 用你们自己的库：`--set postgres.bundled=false --set postgres.urlExistingSecret=…`。
 已有网关：`--set agentgateway.enabled=false`（非回环需要 TLS）。
 
-本图表可用 digest 钉死已签名镜像。当前 `0.1.0` 钉死：
+本图表可用 digest 钉死已签名镜像。当前 `0.1.3` 钉死：
 
-`image.digest=sha256:63206295f5724a814892129ff8129f97a5ec26f4145e6450c80d5f14dce7f7a5`
+`image.digest=sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c`
 
 `values.yaml` 默认仍按 tag，给本机实验用。校验：
 https://github.com/finogeeks/finguard/blob/main/docs/supply-chain.zh.md

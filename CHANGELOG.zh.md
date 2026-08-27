@@ -6,10 +6,32 @@
 
 ## [Unreleased]
 
-- 运维控制台说明：`docs/operator-console.zh.md`。在 HTTP 绑定打开 `/console`
-  （本机 `:19191`，Helm `:8088`）。视图需要带 `admin_role` 的调用方 JWT。
-  `try.sh` 桩身份返回 403 是预期。本树中的页面不再发送 `x-finguard-admin-role`。
-  已签名的 `0.1.0` digest 仍是旧字段文案；把 JWT 贴进令牌框即可。
+## [0.1.3] - 2026-08-27
+
+已签名产品镜像（校验见 [supply-chain.zh.md](docs/supply-chain.zh.md)）：
+
+`ghcr.io/finogeeks/finguard@sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c`
+
+Helm 钉死：
+
+```bash
+--set image.tag=0.1.3 \
+--set image.digest=sha256:46ade9e3e7bd66894905dfefaeae816d5d332b26ae8a8feee09dc958f7613d9c
+```
+
+Mock-ERP 不签名。不要宣称 GA。
+
+### 新增
+
+- 双人上线（`/v1/onboardings`）与运维控制台 `/console`。视图需要带
+  `admin_role` 的调用方 JWT。`try.sh` 桩身份返回 403 是预期。
+- RFC 8693 入站声明（`sub` = 自然人，`act.sub` = 智能体），下游令牌由网关
+  兑换（`auth.downstream: gateway_exchange`）。FinGuard **不签发**下游令牌。
+
+### 变更
+
+- 公开包装实验入口改为 `try.sh` / `lab-exercises.sh`（不再指向私有
+  `integration-lab`）。
 
 ## [0.1.0] - 2026-08-21
 

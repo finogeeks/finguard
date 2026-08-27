@@ -65,7 +65,7 @@ Sidecar (greenfield) talks to FinGuard on **loopback** — gRPC TLS may be off. 
 Pull the product image (pin a digest after a signed release):
 
 ```bash
-docker pull ghcr.io/finogeeks/finguard:0.1.0
+docker pull ghcr.io/finogeeks/finguard:0.1.3
 ```
 
 Laptop lab / local tag: `./scripts/prod/build-ghcr-images.sh` then `FINGUARD_SKIP_PULL=1 docs/public-finguard/try.sh`.

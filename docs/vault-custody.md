@@ -10,7 +10,7 @@ or your 密管, and it does not ship a Vault server in the product image.
 There is **no vendor Vault plugin**. HashiCorp, OpenBao, and experimental
 RustyVault work because they speak a KV HTTP API FinGuard already calls.
 
-**Status:** signed `0.1.0` image — pin digest and verify
+**Status:** signed `0.1.3` image — pin digest and verify
 [supply-chain.md](supply-chain.md). Do not claim GA. The laptop lab (`try.sh`)
 does **not** start Vault and does not prove custody.
 
