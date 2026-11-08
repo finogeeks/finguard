@@ -10,6 +10,7 @@
 [接入 Vault](docs/vault-custody.zh.md)
 
 FinGuard 是智能体与企业写接口（CRM、ERP、工单、内部 HTTP）之间的运行时治理层。智能体拿不到企业系统的原始凭证。
+产品页：[FinGuard（finaios.ai）](https://finaios.ai/zh-hans/products/finguard/)。
 
 本仓库是安装文档、本机实验脚本、Helm 与运维技能的 **公开入口**。不含引擎源码。**签名 + SBOM：** 当前 `0.1.3` digest 按 [`docs/supply-chain.zh.md`](docs/supply-chain.zh.md) 校验。该 digest 之前的同名标签仍未签名。不要把 GHCR 当作 GA 供应链证明。
 
