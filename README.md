@@ -18,6 +18,7 @@ curl -fsSL https://raw.githubusercontent.com/finogeeks/finguard/main/try.sh | sh
 
 FinGuard is the runtime governance layer between agents and enterprise write APIs
 (CRM, ERP, ticketing, internal HTTP). Agents do not get raw enterprise credentials.
+Product page: [FinGuard on finaios.ai](https://finaios.ai/en/products/finguard/).
 
 This repository is the **public home** for install docs, the laptop lab script, Helm,
 and operator skills. It does **not** contain engine source. **Sign + SBOM:** verify
