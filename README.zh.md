@@ -12,6 +12,13 @@
 FinGuard 是智能体与企业写接口（CRM、ERP、工单、内部 HTTP）之间的运行时治理层。智能体拿不到企业系统的原始凭证。
 产品页：[FinGuard（finaios.ai）](https://finaios.ai/zh-hans/products/finguard/)。
 
+### FinGuard 请求流程（约 77 秒讲解）
+
+[![FinGuard request flow, 77-second explainer](docs/media/finguard-explainer-poster.png)](docs/media/finguard-explainer-v0.2.mp4)
+
+英文配音，烧录字幕。点击海报打开 MP4（[直接文件](docs/media/finguard-explainer-v0.2.mp4)）。
+产品页发布后也会放在 [FinGuard 产品页](https://finaios.ai/zh-hans/products/finguard/)。
+
 本仓库是安装文档、本机实验脚本、Helm 与运维技能的 **公开入口**。不含引擎源码。**签名 + SBOM：** 当前 `0.1.3` digest 按 [`docs/supply-chain.zh.md`](docs/supply-chain.zh.md) 校验。该 digest 之前的同名标签仍未签名。不要把 GHCR 当作 GA 供应链证明。
 
 ## 本机实验（建议先做这一步）

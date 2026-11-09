@@ -15,5 +15,7 @@
 | [supply-chain.zh.md](supply-chain.zh.md) | `cosign verify` + SBOM 证明 |
 | [customer-deploy.zh.md](customer-deploy.zh.md) | 保护第一条写 / 切流 |
 
+讲解视频：[media/finguard-explainer-v0.2.mp4](media/finguard-explainer-v0.2.mp4)（约 77 秒，英文）。
+
 给 AI 运维的技能：[../skills/README.zh.md](../skills/README.zh.md)。
 Helm 图表：[../distribution/helm/finguard/README.zh.md](../distribution/helm/finguard/README.zh.md)。
