@@ -16,5 +16,7 @@ releases with [supply-chain.md](supply-chain.md). Older tags may still be unsign
 | [supply-chain.md](supply-chain.md) | `cosign verify` + SBOM attestation |
 | [customer-deploy.md](customer-deploy.md) | First protected write / cutover |
 
+Explainer video: [media/finguard-explainer-v0.2.mp4](media/finguard-explainer-v0.2.mp4) (77s, EN).
+
 Skills for AI operators: [../skills/README.md](../skills/README.md).
 Helm chart: [../distribution/helm/finguard/README.md](../distribution/helm/finguard/README.md).

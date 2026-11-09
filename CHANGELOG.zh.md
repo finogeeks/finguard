@@ -6,6 +6,11 @@
 
 ## [Unreleased]
 
+### 新增
+
+- FinGuard 请求流程讲解视频（v0.2，约 77 秒，英文配音 + 烧录字幕），位于
+  [`docs/media/`](docs/media/)，README 海报可点开。
+
 ## [0.1.3] - 2026-08-27
 
 已签名产品镜像（校验见 [supply-chain.zh.md](docs/supply-chain.zh.md)）：

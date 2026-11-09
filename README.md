@@ -20,6 +20,14 @@ FinGuard is the runtime governance layer between agents and enterprise write API
 (CRM, ERP, ticketing, internal HTTP). Agents do not get raw enterprise credentials.
 Product page: [FinGuard on finaios.ai](https://finaios.ai/en/products/finguard/).
 
+### FinGuard request flow (77-second explainer)
+
+[![FinGuard request flow, 77-second explainer](docs/media/finguard-explainer-poster.png)](docs/media/finguard-explainer-v0.2.mp4)
+
+English voiceover with burned-in subtitles. Click the poster to open the MP4
+([direct file](docs/media/finguard-explainer-v0.2.mp4)). Also on the
+[product page](https://finaios.ai/en/products/finguard/) once published.
+
 This repository is the **public home** for install docs, the laptop lab script, Helm,
 and operator skills. It does **not** contain engine source. **Sign + SBOM:** verify
 [`docs/supply-chain.md`](docs/supply-chain.md) for the current `0.1.3` digest. Same-name

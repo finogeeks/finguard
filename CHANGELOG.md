@@ -4,6 +4,11 @@ Public-facing notes for `finogeeks/finguard`. Do not claim GA, 信创, or 密评
 
 ## [Unreleased]
 
+### Added
+
+- FinGuard request-flow explainer video (v0.2, ~77s, EN VO + burned-in subtitles)
+  under [`docs/media/`](docs/media/), linked from the README poster.
+
 ## [0.1.3] - 2026-08-27
 
 Signed product image (verify [supply-chain.md](docs/supply-chain.md)):
