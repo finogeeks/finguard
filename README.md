@@ -22,11 +22,9 @@ Product page: [FinGuard on finaios.ai](https://finaios.ai/en/products/finguard/)
 
 ### FinGuard request flow (77-second explainer)
 
-[![FinGuard request flow, 77-second explainer](docs/media/finguard-explainer-poster.png)](docs/media/finguard-explainer-v0.2.mp4)
+https://github.com/user-attachments/assets/88e578fc-cfe1-4011-bf6f-0503e5ba00eb
 
-English voiceover with burned-in subtitles. Click the poster to open the MP4
-([direct file](docs/media/finguard-explainer-v0.2.mp4)). Also on the
-[product page](https://finaios.ai/en/products/finguard/) once published.
+English voiceover with burned-in subtitles. Fallback download: [MP4 in this repo](docs/media/finguard-explainer-v0.2.mp4). Also on the [product page](https://finaios.ai/en/products/finguard/) once published.
 
 This repository is the **public home** for install docs, the laptop lab script, Helm,
 and operator skills. It does **not** contain engine source. **Sign + SBOM:** verify
